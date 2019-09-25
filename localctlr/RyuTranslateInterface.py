@@ -1,3 +1,5 @@
+from __future__ import print_function
+from __future__ import absolute_import
 # Copyright 2016 - Sean Donovan
 # AtlanticWave/SDX Project
 
@@ -15,8 +17,8 @@ from shared.LCAction import *
 from shared.LCFields import *
 from shared.LCRule import *
 from shared.ofconstants import *
-from oftables import *
-from InterRyuControllerConnectionManager import *
+from .oftables import *
+from .InterRyuControllerConnectionManager import *
 
 # Ryu libraries
 from ryu import cfg
@@ -720,14 +722,14 @@ class RyuTranslateInterface(app_manager.RyuApp):
             #Find out the request_url
             tunnel_url = (internal_config['corsaurl'] + "api/v1/bridges/" +
                           bridge + "/tunnels?list=true")
-            print "Requesting tunnels from %s" % tunnel_url
+            print("Requesting tunnels from %s" % tunnel_url)
             rest_return = requests.get(tunnel_url,
                                        headers={'Authorization':
                                                 internal_config['corsatoken']},
                                        verify=False) #FIXME: HARDCODED
 
-            print "Looking for %s on ports %s" % (vlan,
-                                      internal_config['corsaratelimitports'])
+            print("Looking for %s on ports %s" % (vlan,
+                                      internal_config['corsaratelimitports']))
                 
             for entry in rest_return.json()['list']:
                 if (entry['vlan-id'] == vlan and
@@ -751,7 +753,7 @@ class RyuTranslateInterface(app_manager.RyuApp):
                                 'value':0}]
                     valid_responses = [204]
 
-                    print "Patching %s:%s" % (request_url, json)
+                    print("Patching %s:%s" % (request_url, json))
                     results.append(TranslatedCorsaRuleContainer("patch",
                                                 request_url,
                                                 jsonval,
@@ -1033,7 +1035,7 @@ class RyuTranslateInterface(app_manager.RyuApp):
                               #  'value':bandwidth}]
                     valid_responses = [204]
 
-                    print "Patching %s:%s" % (request_url, json)
+                    print("Patching %s:%s" % (request_url, json))
                     results.append(TranslatedCorsaRuleContainer("patch",
                                                 request_url,
                                                 jsonval,

@@ -1,3 +1,4 @@
+from __future__ import print_function
 # Copyright 2016 - Sean Donovan
 # AtlanticWave/SDX Project
 
@@ -73,7 +74,7 @@ class PolicyRegistry(AtlanticWaveRegistry):
                     #print "  %s" % classvalue
                     # Exclusion list
                     if str(classvalue) not in EXCLUSION_LIST:
-                        print "str(classvalue): %s" % str(classvalue)
+                        print("str(classvalue): %s" % str(classvalue))
                         self.add_policytype(classvalue)
 
         sys.path.remove(polpath)
