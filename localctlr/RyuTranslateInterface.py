@@ -18,7 +18,7 @@ from shared.LCFields import *
 from shared.LCRule import *
 from shared.ofconstants import *
 from oftables import *
-from .InterRyuControllerConnectionManager import *
+from InterRyuControllerConnectionManager import *
 
 # Ryu libraries
 from ryu import cfg
