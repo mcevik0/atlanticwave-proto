@@ -17,7 +17,7 @@ from shared.LCAction import *
 from shared.LCFields import *
 from shared.LCRule import *
 from shared.ofconstants import *
-from .oftables import *
+from oftables import *
 from .InterRyuControllerConnectionManager import *
 
 # Ryu libraries
