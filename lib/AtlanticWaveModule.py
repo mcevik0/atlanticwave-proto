@@ -48,7 +48,7 @@ class AtlanticWaveModule(object):
 
         # Setup loggers
         self._setup_loggers(loggerid, logfilename, debuglogfilename)
-        
+        self.logger.debug("sys.path: %s" % sys.path)
 
     def _setup_loggers(self, loggerid, logfilename=None, debuglogfilename=None):
         ''' Internal function for setting up the logger formats. '''
