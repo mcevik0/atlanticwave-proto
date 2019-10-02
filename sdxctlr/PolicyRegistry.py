@@ -77,7 +77,12 @@ class PolicyRegistry(AtlanticWaveRegistry):
                         print("str(classvalue): %s" % str(classvalue))
                         self.add_policytype(classvalue)
 
+        self.logger.info("sys.path before removal of %s %s:\n    %s" %
+                         (polpath, len(sys.path), sys.path))
         sys.path.remove(polpath)
+        self.logger.info("sys.path after  removal of %s %s:\n    %s" %
+                         (polpath, len(sys.path), sys.path))
+        
         self.logger.info("%s Found all policy types in %s" % (
             self.__class__.__name__, polpath))
 
