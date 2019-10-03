@@ -52,6 +52,10 @@ class LocalControllerTest(unittest.TestCase):
         cls.logger.debug("Beginning %s:%s" % (os.path.basename(__file__),
                                               cls.__name__))
 
+        import sys
+        cls.logger.debug("BEGIN %s" % cls.__name__)
+        cls.logger.debug("sys.path: %s" % sys.path)
+        
         # Setup the virtual switch
         cls.logger.debug( "Set up virtual switch")
         #subprocess.check_call(['mn', '-c'], stdout=FNULL, stderr=subprocess.STDOUT)

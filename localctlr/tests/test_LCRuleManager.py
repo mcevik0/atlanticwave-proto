@@ -22,6 +22,10 @@ class InitTest(unittest.TestCase):
         cls.logger.debug("Beginning %s:%s" % (os.path.basename(__file__),
                                               cls.__name__))
 
+        import sys
+        cls.logger.debug("BEGIN %s" % cls.__name__)
+        cls.logger.debug("sys.path: %s" % sys.path)
+        
     def test_singleton(self):
         self.logger.warning("BEGIN %s" % (self.id()))
         firstManager = LCRuleManager()
