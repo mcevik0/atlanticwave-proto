@@ -42,11 +42,6 @@ import json
 #after the Process is started. 
 from threading import Thread
 
-#stuff to serve sdxctlr/static content - I will change this in an update but for
-#now this is viable.
-import SimpleHTTPServer
-import SocketServer
-
 #System stuff
 import sys, os, traceback
 

@@ -3,7 +3,7 @@ from __future__ import absolute_import
 # AtlanticWave/SDX Project
 
 
-from .LCFields import *
+from shared.LCFields import *
 
 
 class SDXMatchTypeError(TypeError):

@@ -4,10 +4,10 @@ from __future__ import absolute_import
 # AtlanticWave/SDX Project
 
 
-from .UserPolicy import *
+from shared.UserPolicy import *
 from datetime import datetime
 from shared.constants import *
-from .LearnedDestinationLCRule import *
+from shared.LearnedDestinationLCRule import *
 import networkx as nx
 
 class LearnedDestinationPolicy(UserPolicy):

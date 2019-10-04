@@ -4,11 +4,15 @@
 
 import socket
 import select as pyselect
-import cPickle as pickle
 import logging
 import threading
 import sys
 import struct
+
+if sys.version_info[0] < 3:
+    import cPickle as pickle
+else:
+    import pickle
 
 class ConnectionTypeError(TypeError):
     pass

@@ -22,7 +22,11 @@ from lib.Connection import Connection
 from shared.SDXControllerConnectionManagerConnection import *
 from shared.UserPolicy import UserPolicyBreakdown
 
-from Queue import Queue, Empty
+import sys
+if sys.version_info[0] < 3:
+    from Queue import Queue, Empty
+else:
+    from queue import Queue, Empty
 
 # Connection Queue actions defininition
 NEW_CXN = "New Connection"

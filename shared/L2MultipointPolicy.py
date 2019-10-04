@@ -3,7 +3,7 @@ from __future__ import absolute_import
 # Copyright 2016 - Sean Donovan
 # AtlanticWave/SDX Project
 
-from .UserPolicy import *
+from shared.UserPolicy import *
 from datetime import datetime
 from shared.constants import *
 from shared.L2MultipointEndpointLCRule import L2MultipointEndpointLCRule

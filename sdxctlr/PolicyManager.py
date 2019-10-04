@@ -4,8 +4,6 @@ from __future__ import absolute_import
 # AtlanticWave/SDX Project
 
 
-import cPickle as pickle
-
 from threading import Timer, Lock, Thread
 from datetime import datetime, timedelta
 
@@ -16,6 +14,12 @@ from .ValidityInspector import ValidityInspector
 from .TopologyManager import TopologyManager
 
 from shared.constants import *
+
+import sys
+if sys.version_info[0] < 3:
+    import cPickle as pickle
+else:
+    import pickle
 
 # Define different states!
 ACTIVE_POLICY               = 1

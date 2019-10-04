@@ -3,8 +3,8 @@ from __future__ import absolute_import
 # AtlanticWave/SDX Project
 
 
-from .LCFields import *
-from .LCAction import *
+from shared.LCFields import *
+from shared.LCAction import *
 
 class SDXActionTypeError(TypeError):
     pass

@@ -8,7 +8,7 @@ from __future__ import absolute_import
 # project. It contains Singleton functionality (since all modules are
 # singletons) and logging/debugging facilities that are commonly used.
 
-from .Singleton import Singleton
+from lib.Singleton import Singleton
 import logging
 import dataset
 import os

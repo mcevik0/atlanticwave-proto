@@ -2,7 +2,7 @@ from __future__ import absolute_import
 # Copyright 2018 - Sean Donovan
 # AtlanticWave/SDX Project
 
-from .LCRule import *
+from shared.LCRule import *
 
 # Some noteson the current implementation:
 # - This version is a first pass at implementing the Management VLAN. There are

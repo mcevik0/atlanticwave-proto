@@ -4,13 +4,17 @@ from __future__ import absolute_import
 # AtlanticWave/SDX Project
 
 import os
-
-import cPickle as pickle
 import json
 
 from lib.AtlanticWaveManager import AtlanticWaveManager
 from .AuthorizationInspector import AuthorizationInspector
 from .AuthenticationInspector import AuthenticationInspector
+
+import sys
+if sys.version_info[0] < 3:
+    import cPickle as pickle
+else:
+    import pickle
 
 
 class UserManager(AtlanticWaveManager):

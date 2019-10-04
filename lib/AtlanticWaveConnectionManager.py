@@ -6,7 +6,7 @@ from __future__ import absolute_import
 
 from lib.Singleton import Singleton
 from lib.Connection import Connection
-from .AtlanticWaveModule import *
+from lib.AtlanticWaveModule import *
 
 import socket
 from socket import error as socket_error

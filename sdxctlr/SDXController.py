@@ -6,24 +6,27 @@ from __future__ import absolute_import
 
 import threading
 import sys
-from Queue import Queue, Empty
+if sys.version_info[0] < 3:
+    from Queue import Queue, Empty
+else:
+    from queue import Queue, Empty
 
 from lib.AtlanticWaveModule import AtlanticWaveModule
 from lib.Connection import select as cxnselect
 from shared.SDXControllerConnectionManager import *
 from shared.SDXControllerConnectionManagerConnection import *
 from shared.UserPolicy import UserPolicyBreakdown
-from .AuthenticationInspector import *
-from .AuthorizationInspector import *
-from .BreakdownEngine import *
-from .LocalControllerManager import *
-from .RestAPI import *
-from .PolicyManager import *
-from .PolicyRegistry import *
-from .TopologyManager import *
-from .ValidityInspector import *
-from .UserManager import *
-from .SenseAPI import *
+from sdxctlr.AuthenticationInspector import *
+from sdxctlr.AuthorizationInspector import *
+from sdxctlr.BreakdownEngine import *
+from sdxctlr.LocalControllerManager import *
+from sdxctlr.RestAPI import *
+from sdxctlr.PolicyManager import *
+from sdxctlr.PolicyRegistry import *
+from sdxctlr.TopologyManager import *
+from sdxctlr.ValidityInspector import *
+from sdxctlr.UserManager import *
+from sdxctlr.SenseAPI import *
 
 # Known UserPolicies
 #FIXME: from shared.JsonUploadPolicy import *

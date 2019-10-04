@@ -14,13 +14,18 @@ from shared.L2TunnelPolicy import L2TunnelPolicy
 from .AuthenticationInspector import AuthenticationInspector
 from .AuthorizationInspector import AuthorizationInspector
 from .PolicyManager import PolicyManager, PolicyManagerError
-from .TopologyManager import TopologyManager, TOPO_EDGE_TYPE
+from sdxctlr.TopologyManager import TopologyManager, TOPO_EDGE_TYPE
 from .UserManager import UserManager
 
 from threading import Lock
-import cPickle as pickle
 import rdflib
 from rdflib.util import list2set
+
+import sys
+if sys.version_info[0] < 3:
+    import cPickle as pickle
+else:
+    import pickle
 
 
 # Flask imports

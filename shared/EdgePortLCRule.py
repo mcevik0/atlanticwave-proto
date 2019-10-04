@@ -3,7 +3,7 @@ from __future__ import absolute_import
 # AtlanticWave/SDX Project
 
 
-from .LCRule import *
+from shared.LCRule import LCRule, LCRuleTypeError
 
 VLAN_MIN = 0
 VLAN_MAX = 4095

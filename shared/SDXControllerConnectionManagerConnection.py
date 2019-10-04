@@ -4,12 +4,16 @@ from __future__ import print_function
 
 
 from lib.Connection import Connection
-import cPickle as pickle
 import struct
 import threading
 import socket
 from time import sleep
 
+import sys
+if sys.version_info[0] < 3:
+    import cPickle as pickle
+else:
+    import pickle
 
 # This list of state machien states is primarily a point of reference.
 STATE_MACHINE_STAGES = [ 'UNCONNECTED',

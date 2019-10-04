@@ -3,7 +3,7 @@ from __future__ import absolute_import
 # AtlanticWave/SDX Project
 
 
-from .LCRule import *
+from shared.LCRule import *
 
 class FloodTreeLCRule(LCRule):
     ''' This structure is used to pass the ports that belong to a spanning tree

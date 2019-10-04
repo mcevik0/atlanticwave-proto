@@ -4,7 +4,7 @@ from __future__ import absolute_import
 # AtlanticWave/SDX Project
 
 
-from .UserPolicy import *
+from shared.UserPolicy import *
 from datetime import datetime
 from shared.constants import rfc3339format
 from shared.SDXMatches import *
