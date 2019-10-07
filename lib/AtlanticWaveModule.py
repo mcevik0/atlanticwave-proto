@@ -21,8 +21,7 @@ class AtlanticWaveModuleValueError(ValueError):
 class AtlanticWaveModuleTypeError(TypeError):
     pass
 
-class AtlanticWaveModule(object):
-    __metaclass__ = Singleton
+class AtlanticWaveModule(metaclass=Singleton):
 
     def __init__(self, loggerid, logfilename=None, debuglogfilename=None):
         ''' Takes two mandatory parameters to properly setup logging, with one

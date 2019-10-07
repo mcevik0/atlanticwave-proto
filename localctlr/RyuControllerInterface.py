@@ -7,7 +7,6 @@ from .ControllerInterface import *
 from .InterRyuControllerConnectionManager import *
 from ryu.ofproto import ofproto_v1_3
 from ryu.cmd.manager import main
-from lib.Singleton import Singleton
 from lib.Connection import select as cxnselect
 from shared.LCRule import LCRule
 from .switch_messages import *

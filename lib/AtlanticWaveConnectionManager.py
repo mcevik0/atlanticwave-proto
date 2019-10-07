@@ -4,7 +4,6 @@ from __future__ import absolute_import
 # AtlanticWave/SDX Project
 
 
-from lib.Singleton import Singleton
 from lib.Connection import Connection
 from lib.AtlanticWaveModule import *
 
