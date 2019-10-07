@@ -21,8 +21,8 @@ class AtlanticWaveModuleValueError(ValueError):
 class AtlanticWaveModuleTypeError(TypeError):
     pass
 
-class AtlanticWaveModule(metaclass=Singleton):
-
+class _AWM(object):
+    # This is to keep Python2 and Python3 happy!
     def __init__(self, loggerid, logfilename=None, debuglogfilename=None):
         ''' Takes two mandatory parameters to properly setup logging, with one
             optional parameter for secondary logging:
@@ -34,8 +34,8 @@ class AtlanticWaveModule(metaclass=Singleton):
                 leave as None.
         '''
 
-        super(AtlanticWaveModule, self).__init__()
-        
+        super(_AWM, self).__init__()
+
         # Check inputs
         if (logfilename != None):
             if (logfilename == debuglogfilename):
@@ -97,9 +97,9 @@ class AtlanticWaveModule(metaclass=Singleton):
 
     def _initialize_db(self, db_filename, db_tables_tuples,
                        print_table_on_load=False):
-        # A lot of modules will need DB access for storing data, but some use a
-        # DB for storing configuration information as well. This is *optional*
-        # to use, which is why it's not part of __init__()
+        # A lot of modules will need DB access for storing data, but some
+        # use a DB for storing configuration information as well. This is
+        # *optional* to use, which is why it's not part of __init__()
         # Details on the setup:
         # https://dataset.readthedocs.io/en/latest/api.html
         # https://github.com/g2p/bedup/issues/38#issuecomment-43703630
@@ -129,3 +129,15 @@ class AtlanticWaveModule(metaclass=Singleton):
                                  name)
                 t = self.db[table]
                 setattr(self, name, t)
+
+if sys.version_info[0] < 3:
+    class AtlanticWaveModule(_AWM):
+        __metaclass__ = Singleton
+        pass
+else:
+    class AtlanticWaveModule(_AWM, metaclass=Singleton):
+        pass
+        
+
+    
+
