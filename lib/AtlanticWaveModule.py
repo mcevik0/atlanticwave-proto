@@ -1,5 +1,6 @@
 from __future__ import print_function
 from __future__ import absolute_import
+from future.utils import with_metaclass
 # Copyright 2018 - Sean Donovan
 # AtlanticWave/SDX Project
 
@@ -21,7 +22,7 @@ class AtlanticWaveModuleValueError(ValueError):
 class AtlanticWaveModuleTypeError(TypeError):
     pass
 
-class _AWM(object):
+class AtlanticWaveModule(with_metaclass(Singleton, object)):
     # This is to keep Python2 and Python3 happy!
     def __init__(self, loggerid, logfilename=None, debuglogfilename=None):
         ''' Takes two mandatory parameters to properly setup logging, with one
@@ -34,7 +35,7 @@ class _AWM(object):
                 leave as None.
         '''
 
-        super(_AWM, self).__init__()
+        super(AtlanticWaveModule, self).__init__()
 
         # Check inputs
         if (logfilename != None):
@@ -129,15 +130,5 @@ class _AWM(object):
                                  name)
                 t = self.db[table]
                 setattr(self, name, t)
-
-if sys.version_info[0] < 3:
-    class AtlanticWaveModule(_AWM):
-        __metaclass__ = Singleton
-        pass
-else:
-    class AtlanticWaveModule(_AWM, metaclass=Singleton):
-        pass
-        
-
     
 
