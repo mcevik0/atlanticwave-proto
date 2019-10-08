@@ -109,7 +109,7 @@ class EP_LOGIN_Test(unittest.TestCase):
         expected_output = { u"error": u"User Not Authenticated"}
             
         print("%s:%s -\n    Expected output %s\n    Received output %s" %
-              (self.__name__, "test_POST_failure",
+              (self, "test_POST_failure",
                expected_output, json.loads(output)))
         self.assertEqual(expected_output,
                          json.loads(output))
@@ -219,7 +219,7 @@ class EndpointTestCase(unittest.TestCase):
                                               endpoint])
 
         print("%s:%s -\n    %s:%s\n    Expected output %s\n    Received output %s" %
-              (self.__name__, "run_case_json", endpoint, method,
+              (self, "run_case_json", endpoint, method,
                expected_output, json.loads(output)))
               
         if expected_output != "":
@@ -330,7 +330,7 @@ class EP_LOCALCONTROLLERLC_Test(EndpointTestCase):
                                           '-b', self.cookie_file])
         expected_output = '{}'
         print("%s:%s -\n    Expected output %s\n    Received output %s" %
-              (self.__name__, "test_GET_failure",
+              (self, "test_GET_failure",
                expected_output, json.loads(output)))
               
         self.assertEqual(expected_output, output)
@@ -343,7 +343,7 @@ class EP_LOCALCONTROLLERLCINT_Test(EndpointTestCase):
         expected_output = { u"error": u"User Not Authenticated"}
 
         print("%s:%s -\n    Expected output %s\n    Received output %s" %
-              (self.__name__, "test_GET_no_login_json",
+              (self, "test_GET_no_login_json",
                expected_output, json.loads(output)))
         self.run_case_json(endpoint, expected_output)
 
@@ -369,7 +369,7 @@ class EP_LOCALCONTROLLERLCINT_Test(EndpointTestCase):
                                           '-b', self.cookie_file])
         expected_output = '{}'
         print("%s:%s -\n    Expected output %s\n    Received output %s" %
-              (self.__name__, "test_GET_failure",
+              (self, "test_GET_failure",
                expected_output, json.loads(output)))
         self.assertEqual(expected_output, output)
         
@@ -408,7 +408,7 @@ class EP_LOCALCONTROLLERLCSW_Test(EndpointTestCase):
                                           '-b', self.cookie_file])
         expected_output = '{}'
         print("%s:%s -\n    Expected output %s\n    Received output %s" %
-              (self.__name__, "test_GET_failure",
+              (self, "test_GET_failure",
                expected_output, json.loads(output)))
         self.assertEqual(expected_output, output)
 
@@ -466,7 +466,7 @@ class EP_LOCALCONTROLLERLCSWSPEC_Test(EndpointTestCase):
                                           '-b', self.cookie_file])
         expected_output = '{}'
         print("%s:%s -\n    Expected output %s\n    Received output %s" %
-              (self.__name__, "test_GET_failure",
+              (self, "test_GET_failure",
                expected_output, json.loads(output)))
         self.assertEqual(expected_output, output)
 
@@ -515,7 +515,7 @@ class EP_LOCALCONTROLLERLCSWSPECPORT_Test(EndpointTestCase):
                                           '-b', self.cookie_file])
         expected_output = '{}'
         print("%s:%s -\n    Expected output %s\n    Received output %s" %
-              (self.__name__, "test_GET_failure",
+              (self, "test_GET_failure",
                expected_output, json.loads(output)))
         self.assertEqual(expected_output, output)
 
@@ -560,7 +560,7 @@ class EP_LOCALCONTROLLERLCSWSPECPORTSPEC_Test(EndpointTestCase):
                                           '-b', self.cookie_file])
         expected_output = '{}'
         print("%s:%s -\n    Expected output %s\n    Received output %s" %
-              (self.__name__, "test_GET_failure",
+              (self, "test_GET_failure",
                expected_output, json.loads(output)))
         self.assertEqual(expected_output, output)
 
@@ -636,7 +636,7 @@ class EP_USERSSPEC_Test(EndpointTestCase):
         print("output: %s\n\n\n" % output)
         expected_output = '{}'
         print("%s:%s -\n    Expected output %s\n    Received output %s" %
-              (self.__name__, "test_GET_failure",
+              (self, "test_GET_failure",
                expected_output, json.loads(output)))
         self.assertEqual(expected_output, output)
 
@@ -673,7 +673,7 @@ class EP_USERSSPECPOLICIES_Test(EndpointTestCase):
         print("output: %s\n\n\n" % output)
         expected_output = '{}'
         print("%s:%s -\n    Expected output %s\n    Received output %s" %
-              (self.__name__, "test_GET_failure",
+              (self, "test_GET_failure",
                expected_output, json.loads(output)))
         self.assertEqual(expected_output, output)
 
@@ -709,7 +709,7 @@ class EP_USERSSPECPERMISSIONS_Test(EndpointTestCase):
         print("output: %s\n\n\n" % output)
         expected_output = '{}'
         print("%s:%s -\n    Expected output %s\n    Received output %s" %
-              (self.__name__, "test_GET_failure",
+              (self, "test_GET_failure",
                expected_output, json.loads(output)))
         self.assertEqual(expected_output, output)
 
@@ -734,12 +734,12 @@ class EP_POLICIES_Test(EndpointTestCase):
         print("\n\n\n output: %s\n keys:%s\n\n\n" % (output, output.keys()))
 
         print("%s:%s -\n    Expected output %s\n    Received output %s" %
-              (self.__name__, "test_GET_with_login",
+              (self, "test_GET_with_login",
                'links inside', json.loads(output.keys())))
         self.assertTrue('links' in output.keys())
 
         print("%s:%s -\n    Expected output %s\n    Received output %s" %
-              (self.__name__, "test_GET_with_login",
+              (self, "test_GET_with_login",
                1, len(output['links'].keys())))
         self.assertEqual(len(output['links'].keys()), 1)
 
@@ -783,12 +783,12 @@ class EP_POLICIESSPEC_Test(EndpointTestCase):
         print("\n\n\n output: %s\n keys:%s\n\n\n" % (output, output.keys()))
 
         print("%s:%s -\n    Expected output %s\n    Received output %s" %
-              (self.__name__, "test_GET_with_login",
+              (self, "test_GET_with_login",
                'links inside', json.loads(output.keys())))
         self.assertTrue('links' in output.keys())
 
         print("%s:%s -\n    Expected output %s\n    Received output %s" %
-              (self.__name__, "test_GET_with_login",
+              (self, "test_GET_with_login",
                1, len(output['links'].keys())))              
         self.assertEqual(len(output['links'].keys()), 1)
 
@@ -825,7 +825,7 @@ class EP_POLICIESSPEC_Test(EndpointTestCase):
         print("\n\n\nendpoint: %s\noutput: %s\n\n\n" % (endpoint, output))
         expected_output = {u"error":u"Not found"}
         print("%s:%s -\n    Expected output %s\n    Received output %s" %
-              (self.__name__, "test_GET_failure",
+              (self, "test_GET_failure",
                expected_output, json.loads(output)))
         self.assertEqual(expected_output,
                          json.loads(output))
@@ -935,12 +935,12 @@ class EP_POLICIESTYPESPEC_Test(EndpointTestCase):
         print("\n\n\n output: %s\n keys:%s\n\n\n" % (output, output.keys()))
 
         print("%s:%s -\n    Expected output %s\n    Received output %s" %
-              (self.__name__, "test_GET_with_login",
+              (self, "test_GET_with_login",
                'links inside', json.loads(output.keys())))
         self.assertTrue('links' in output.keys())
 
         print("%s:%s -\n    Expected output %s\n    Received output %s" %
-              (self.__name__, "test_GET_with_login",
+              (self, "test_GET_with_login",
                1, len(output['links'].keys())))
         self.assertEqual(len(output['links'].keys()), 1)
 
@@ -990,12 +990,12 @@ class EP_POLICIESTYPESPEC_POST_Test(EndpointTestCase):
         print("\n\n\n output: %s\n keys:%s\n\n\n" % (output, output.keys()))
 
         print("%s:%s -\n    Expected output %s\n    Received output %s" %
-              (self.__name__, "test_install_and_remove",
+              (self, "test_install_and_remove",
                'links inside', json.loads(output.keys())))
         self.assertTrue('links' in output.keys())
 
         print("%s:%s -\n    Expected output %s\n    Received output %s" %
-              (self.__name__, "test_install_and_remove",
+              (self, "test_install_and_remove",
                1, len(output['links'].keys())))
         self.assertEqual(len(output['links'].keys()), 1)
 
@@ -1089,10 +1089,3 @@ class EP_POLICIESTYPESPEC_POST_Test(EndpointTestCase):
 
 if __name__ == '__main__':
     unittest.main()
-
-
-
-
-
-
-    
