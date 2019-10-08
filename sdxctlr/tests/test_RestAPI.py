@@ -1027,7 +1027,13 @@ class EP_POLICIESTYPESPEC_POST_Test(EndpointTestCase):
                                           '-d', l2tunnel,
                                           '-b', self.cookie_file])
         output = json.loads(output)
+        print("%s:%s -\n    Expected output %s\n    Received output %s" %
+              (self, "test_install_and_remove",
+               'policy inside', output.keys()))
         self.assertTrue('policy' in output.keys())
+        print("%s:%s -\n    Expected output %s\n    Received output %s" %
+              (self, "test_install_and_remove",
+               'href inside', output['policy'].keys()))
         self.assertTrue('href' in output['policy'].keys())
         installed_policynum = int(output['policy']['href'].split("/")[-1])
 
