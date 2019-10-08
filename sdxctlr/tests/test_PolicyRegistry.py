@@ -16,7 +16,7 @@ class SingletonTest(unittest.TestCase):
         firstRegistry = PolicyRegistry()
         secondRegistry = PolicyRegistry()
 
-        self.failUnless(firstRegistry is secondRegistry)
+        self.assertTrue(firstRegistry is secondRegistry)
 
 class AddingPoliciesTest(unittest.TestCase):
     def test_add_policytype(self):
@@ -30,20 +30,23 @@ class AddingPoliciesTest(unittest.TestCase):
         reg = PolicyRegistry()
         reg.add_policytype(FakePolicyType)
         retval = reg.get_policy_class("FakePolicyType")
-        self.failUnless(retval is FakePolicyType)
+        self.assertTrue(retval is FakePolicyType)
         reg.rm_policytype(FakePolicyType)
 
 class NonPolicyTest(unittest.TestCase):
     def test_non_policytype(self):
         reg = PolicyRegistry()
-        self.failUnlessRaises(PolicyRegistryTypeError,
-                              reg.get_policy_class, "TotallyDoesNotExist")
+        self.assertRaises(PolicyRegistryTypeError,
+                          reg.get_policy_class, "TotallyDoesNotExist")
         
 
-class find_policies(unittest.TestCase):
+class FindPoliciesTest(unittest.TestCase):
     def test_autopopulate(self):
         reg = PolicyRegistry()
+        print("Before find_policies()")
         reg.find_policies()
+        print("After find_policies()")
+        print(reg.get_list_of_policies())
 
 if __name__ == '__main__':
     unittest.main()

@@ -49,11 +49,11 @@ class PolicyRegistry(AtlanticWaveRegistry):
 
         # Thanks to this stackoverflow thread:
         # https://stackoverflow.com/questions/3178285/list-classes-in-directory-python
-        self.logger.info("%s looking for policies in %s" % (
+        self.logger.warning("%s looking for policies in %s" % (
             self.__class__.__name__, polpath))
 
         sys.path.append(polpath)
-        import UserPolicy # so it's importing UserPolicy the say way it's importing everything from the shared directory.
+        import shared.UserPolicy # so it's importing UserPolicy the say way it's importing everything from the shared directory.
                     
 
 
@@ -61,20 +61,21 @@ class PolicyRegistry(AtlanticWaveRegistry):
             modulename = os.path.splitext(os.path.basename(file))[0]
             module = __import__(modulename)
 
-            #print "\n\n\nmodule: %s" % modulename
+            #print("\n\n\nmodule: %s" % modulename)
             
             for classname in dir(module):
                 classvalue = getattr(module, classname)
 
                 # We only want local items, only want classes, and only want
                 # subclasses of UserPolicy
+                #print("  all - %s" % classvalue)
                 if ((modulename in str(classvalue)) and 
                     inspect.isclass(classvalue) and
-                    issubclass(classvalue, UserPolicy.UserPolicy)):
-                    #print "  %s" % classvalue
+                    issubclass(classvalue, shared.UserPolicy.UserPolicy)):
+                    #print("  %s" % classvalue)
                     # Exclusion list
                     if str(classvalue) not in EXCLUSION_LIST:
-                        print("str(classvalue): %s" % str(classvalue))
+                        #print("str(classvalue): %s" % str(classvalue))
                         self.add_policytype(classvalue)
 
         self.logger.info("sys.path before removal of %s %s:\n    %s" %
