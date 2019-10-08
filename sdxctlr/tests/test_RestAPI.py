@@ -220,7 +220,7 @@ class EndpointTestCase(unittest.TestCase):
 
         print("%s:%s -\n    %s:%s\n    Expected output %s\n    Received output %s" %
               (self, "run_case_json", endpoint, method,
-               expected_output, json.loads(output)))
+               expected_output, output))
               
         if expected_output != "":
             self.assertEqual(expected_output,
