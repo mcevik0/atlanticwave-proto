@@ -342,9 +342,6 @@ class EP_LOCALCONTROLLERLCINT_Test(EndpointTestCase):
         endpoint = ENDPOINT_PREFIX + suffix
         expected_output = { u"error": u"User Not Authenticated"}
 
-        print("%s:%s -\n    Expected output %s\n    Received output %s" %
-              (self, "test_GET_no_login_json",
-               expected_output, json.loads(output)))
         self.run_case_json(endpoint, expected_output)
 
     def test_GET_with_login(self):
@@ -735,7 +732,7 @@ class EP_POLICIES_Test(EndpointTestCase):
 
         print("%s:%s -\n    Expected output %s\n    Received output %s" %
               (self, "test_GET_with_login",
-               'links inside', json.loads(output.keys())))
+               'links inside', output.keys()))
         self.assertTrue('links' in output.keys())
 
         print("%s:%s -\n    Expected output %s\n    Received output %s" %
@@ -784,7 +781,7 @@ class EP_POLICIESSPEC_Test(EndpointTestCase):
 
         print("%s:%s -\n    Expected output %s\n    Received output %s" %
               (self, "test_GET_with_login",
-               'links inside', json.loads(output.keys())))
+               'links inside', output.keys()))
         self.assertTrue('links' in output.keys())
 
         print("%s:%s -\n    Expected output %s\n    Received output %s" %
@@ -936,7 +933,7 @@ class EP_POLICIESTYPESPEC_Test(EndpointTestCase):
 
         print("%s:%s -\n    Expected output %s\n    Received output %s" %
               (self, "test_GET_with_login",
-               'links inside', json.loads(output.keys())))
+               'links inside', output.keys()))
         self.assertTrue('links' in output.keys())
 
         print("%s:%s -\n    Expected output %s\n    Received output %s" %
@@ -991,7 +988,7 @@ class EP_POLICIESTYPESPEC_POST_Test(EndpointTestCase):
 
         print("%s:%s -\n    Expected output %s\n    Received output %s" %
               (self, "test_install_and_remove",
-               'links inside', json.loads(output.keys())))
+               'links inside', output.keys()))
         self.assertTrue('links' in output.keys())
 
         print("%s:%s -\n    Expected output %s\n    Received output %s" %
