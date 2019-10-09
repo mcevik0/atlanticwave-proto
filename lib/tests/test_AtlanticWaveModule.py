@@ -23,7 +23,7 @@ class DefaultLogSetupTest(unittest.TestCase):
         module = AtlanticWaveModule(__name__,
                                     self.logfilename)
         import sys
-        module.logger.debug("BEGIN %s" % cls.__name__)
+        module.logger.debug("BEGIN %s" % self.__name__)
         module.logger.debug("sys.path: %s" % sys.path)
         
 
