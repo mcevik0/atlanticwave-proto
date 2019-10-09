@@ -103,7 +103,7 @@ class number_field(LCField):
                 type(value) is not int and
                 type(value) is not long):
                 raise LCFieldTypeError("value is not a number")
-            elif (type(value) is not into):
+            elif (type(value) is not int):
                 raise LCFieldTypeError("value is not a number")
                 
         
