@@ -5,10 +5,15 @@
 import unittest
 import socket
 import threading
-import cPickle as pickle
 from time import sleep
 from shared.SDXControllerConnectionManagerConnection import *
 from lib.Connection import select as cxnselect
+
+import sys
+if sys.version_info[0] < 3:
+    import cPickle as pickle
+else:
+    import pickle
 
 class dummy_rule(object):
     def __init__(self, name, switch_id):

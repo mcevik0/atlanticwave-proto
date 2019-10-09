@@ -1,7 +1,11 @@
 # Copyright 2018 - Sean Donovan
 # AtlanticWave/SDX Project
 
-import cPickle as pickle
+import sys
+if sys.version_info[0] < 3:
+    import cPickle as pickle
+else:
+    import pickle
 from lib.AtlanticWaveManager import AtlanticWaveManager
 
 # List of rule statuses

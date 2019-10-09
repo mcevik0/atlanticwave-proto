@@ -6,9 +6,15 @@
 import unittest
 import socket
 import threading
-import cPickle as pickle
 from time import sleep
 from lib.Connection import *
+
+import sys
+if sys.version_info[0] < 3:
+    import cPickle as pickle
+else:
+    import pickle
+
 
 
 class InitTest(unittest.TestCase):

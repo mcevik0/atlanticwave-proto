@@ -6,13 +6,11 @@ from __future__ import absolute_import
 
 import logging
 import threading
-import sys
 import json
 import signal
 import os
 import atexit
 import traceback
-import cPickle as pickle
 from Queue import Queue, Empty
 from time import sleep
 
@@ -24,6 +22,11 @@ from shared.SDXControllerConnectionManager import *
 from shared.SDXControllerConnectionManagerConnection import *
 from .switch_messages import *
 
+import sys
+if sys.version_info[0] < 3:
+    import cPickle as pickle
+else:
+    import pickle
 LOCALHOST = "127.0.0.1"
 DEFAULT_RYU_CXN_PORT = 55767
 DEFAULT_OPENFLOW_PORT = 6633

@@ -7,11 +7,16 @@ from __future__ import absolute_import
 import logging
 import threading
 import dataset
-import cPickle as pickle
 import requests
 import json
 from time import sleep
 
+import sys
+if sys.version_info[0] < 3:
+    import cPickle as pickle
+else:
+    import pickle
+    
 # Generic AtlanticWave/SDX imports
 from shared.LCAction import *
 from shared.LCFields import *
