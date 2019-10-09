@@ -99,8 +99,13 @@ class number_field(LCField):
     def __init__(self, name, minval, maxval, value=None, 
                  mask=False, others=[], prereqs=[]):
         if value is not None:
-            if type(value) is not int and type(value) is not long:
+            if (sys.version_info[0] < 3 and
+                type(value) is not int and
+                type(value) is not long:
                 raise LCFieldTypeError("value is not a number")
+            elif (type(value) is not into):
+                raise LCFieldTypeError("value is not a number")
+                
         
         self.minval = minval
         self.maxval = maxval

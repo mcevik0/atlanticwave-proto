@@ -48,7 +48,7 @@ def make_steiner_tree(G, voi, generator=None):
                         result = bidirectional_dijkstra(G, v1, v2)
                         if result == False:
                                 raise RuntimeError("The two vertices given (%s, %s) don't exist on the same connected graph" % (v1, v2))
-                                #print "The two vertices given (%s, %s) don't exist on the same connected graph" % (v1, v2)
+                                #print("The two vertices given (%s, %s) don't exist on the same connected graph" % (v1, v2))
                         distance, vertList = result
                         keys = [v1, v2]
                         keys.sort()

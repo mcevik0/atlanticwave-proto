@@ -52,6 +52,14 @@ class MatchActionLCRule(LCRule):
                    self.matches, self.actions))
         return retstr
 
+    def __eq__(self, other):
+        return (type(self) == type(other) and
+                self.get_switch_id() == other.get_switch_id() and
+                self.get_cookie() == other.get_cookie() and
+                self.get_matches() == other.get_matches() and
+                self.get_actions() == other.get_actions() and
+                self.get_ingress() == other.get_ingress())
+
     def get_matches(self):
         return self.matches
 

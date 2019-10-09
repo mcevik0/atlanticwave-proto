@@ -55,7 +55,7 @@ class OpenListeningPortTest(unittest.TestCase):
         self.SendingSock.close()
 
     def receiving_thread(self, cxn):
-        print "Recieving Conne cction NEW! %s" % str(cxn)
+        print("Recieving Conne cction NEW! %s" % str(cxn))
         self.ReceivingConnection = cxn
         data = self.ReceivingConnection.recv()
         self.object_received = data
@@ -76,8 +76,8 @@ class OpenSendingText(unittest.TestCase):
         self.ReceiveThread.daemon = True
         self.ReceiveThread.start()
 
-        print self.manager.__repr__()
-        print self.manager
+        print(self.manager.__repr__())
+        print(self.manager)
 
     def test_sending_port(self):
         cxn = self.manager.open_outbound_connection(self.ip, self.port)
