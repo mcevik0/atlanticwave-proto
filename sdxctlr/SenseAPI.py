@@ -239,10 +239,10 @@ class SenseAPI(AtlanticWaveManager):
         print("\n\n")
 
         #model, newbool = self.get_latest_model()
-        #print "get_latest_model %s, %s" % (newbool, model['model'])
-        #print "\n\n"
+        #print("get_latest_model %s, %s" % (newbool, model['model']))
+        #print("\n\n")
         #model, newbool = self.get_latest_model()
-        #print "get_latest_model %s, %s" % (newbool, model['model'])
+        #print("get_latest_model %s, %s" % (newbool, model['model']))
         
         print("\n\n")
         print("simplified_topo:\n")
@@ -627,7 +627,7 @@ class SenseAPI(AtlanticWaveManager):
             # each connection on the edge node add a connection to the central
             # node.
             for node in self.current_topo.nodes(): # name of node
-                #print self.current_topo[node]
+                #print(self.current_topo[node])
                 t = self.current_topo.node[node]['type']
                 alias = None
                 if 'alias' in self.current_topo.node[node].keys():
@@ -643,7 +643,7 @@ class SenseAPI(AtlanticWaveManager):
                         # of the connection.                    
                         self.simplified_topo.node[new_node]['start_node'] = node
                         self.simplified_topo.node[new_node]['end_node'] = edge
-                        #print self.current_topo[node][edge]
+                        #print(self.current_topo[node][edge])
                         bw = self.current_topo[node][edge]['weight']
                         self.simplified_topo.node[new_node]['max_bw'] = bw
                         vlans = self.current_topo[node][edge]['available_vlans']

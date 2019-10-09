@@ -1,3 +1,4 @@
+from __future__ import print_function
 # Copyright 2018 - Sean Donovan
 # AtlanticWave/SDX Project
 
@@ -25,11 +26,11 @@ BASIC_MANIFEST_FILE = "sdxctlr/tests/api_files/twoswitch-onelc-noncorsa.manifest
 
 def add_policy(param):
     # For Policy Manager
-    print "Add Policy %s" % param
+    print("Add Policy %s" % param)
 
 def rm_policy(param):
     # For Policy Manager
-    print "Rm  Policy %s" % param
+    print("Rm  Policy %s" % param)
     
 
 class SingletonTest(unittest.TestCase):
@@ -63,7 +64,7 @@ class PutGetDeltaTest(unittest.TestCase):
 
         api = SenseAPI(DB_FILE)
 
-        #print api._get_all_deltas()
+        #print(api._get_all_deltas())
         delta_id = 1
         api._put_delta(delta_id, self.raw_request, self.sdx_policy_addition,
                        self.sdx_policy_reduction, self.model_id)
@@ -138,7 +139,7 @@ class PutGetDeltaTest(unittest.TestCase):
 
         api._put_delta(delta_id, status=self.status_created, update=True)
         raw_delta = api._get_delta_by_id(delta_id)
-        #print "    %s" % raw_delta
+        #print("    %s" % raw_delta)
 
         self.failUnlessEqual(raw_delta['delta_id'], delta_id)
         self.failUnlessEqual(raw_delta['raw_request'], self.raw_request)
@@ -277,15 +278,15 @@ class ModelTest(unittest.TestCase):
         api = SenseAPI(DB_FILE)
 
         model = api.generate_model()
-        #print "MODEL\n%s\n\n\n" % str(model)
+        #print("MODEL\n%s\n\n\n" % str(model))
 
         f = open('model.txt', 'w')
         f.write(model)
         #import json
-        #print "FULL TOPOLOGY\n%s\n\n\n" % json.dumps(tm.get_topology().nodes(
-        #    data=True), sort_keys=True, indent=4)
-        #print "SIMPLIFIED TOPOLOGY\n%s\n\n\n" % json.dumps(api.simplified_topo.nodes(
-        #    data=True), sort_keys=True, indent=4)
+        #print("FULL TOPOLOGY\n%s\n\n\n" % json.dumps(tm.get_topology().nodes(
+        #    data=True), sort_keys=True, indent=4))
+        #print("SIMPLIFIED TOPOLOGY\n%s\n\n\n" % json.dumps(api.simplified_topo.nodes(
+        #    data=True), sort_keys=True, indent=4))
 #FIXME: What else? - This should definitely be enhanced.
 
 class DeltaTest(unittest.TestCase):
@@ -389,11 +390,11 @@ class DeltaTest(unittest.TestCase):
         rev_eq = (result.json_policy ==
                   rev_expected_addition_policy.json_policy)
 
-        #print "\nEXPECTED: %s" % fwd_expected_addition_policy.json_policy
-        #print "EXPECTED: %s" % rev_expected_addition_policy.json_policy
-        #print "RECEIVED: %s" % result.json_policy
-        #print "fwd_eq: %s" % fwd_eq
-        #print "rev_eq: %s" % rev_eq
+        #print("\nEXPECTED: %s" % fwd_expected_addition_policy.json_policy)
+        #print("EXPECTED: %s" % rev_expected_addition_policy.json_policy)
+        #print("RECEIVED: %s" % result.json_policy)
+        #print("fwd_eq: %s" % fwd_eq)
+        #print("rev_eq: %s" % rev_eq)
         self.assertTrue(fwd_eq or rev_eq)
         #FIXME: how to test this?
 
@@ -426,8 +427,8 @@ class DeltaTest(unittest.TestCase):
 
         result = api._parse_delta_addition(addition)
 
-        #print "\nEXPECTED: %s" % expected_addition_policy.json_policy
-        #print "RECEIVED: %s\n" % result.json_policy
+        #print("\nEXPECTED: %s" % expected_addition_policy.json_policy)
+        #print("RECEIVED: %s\n" % result.json_policy)
 
         #e = json.loads(dict(expected_addition_policy.json_policy))
         #r = dict(result.json_policy)
@@ -478,21 +479,21 @@ class DeltaTest(unittest.TestCase):
         api._put_delta(delta_id, raw_request, sdx_policy, model_id)
 
         #deltas = api.delta_table.find()
-        #print "\n\nDELTAS:"
+        #print("\n\nDELTAS:")
         #for d in deltas:
-        #    print "%s" % d
+        #    print("%s" % d)
 
-        #print "\n%s" % delta_id
+        #print("\n%s" % delta_id)
         raw_delta = api._get_delta_by_id(delta_id)
         self.assertNotEqual(None, raw_delta)
 
         # Try removing it again
         delta, status = api.process_deltas(deltadata)
-        #print "\nDelta:  %s" % delta
-        #print "Status: %s\n" % status
+        #print("\nDelta:  %s" % delta)
+        #print("Status: %s\n" % status)
         
         raw_delta = api._get_delta_by_id(delta_id)
-        #print "\nRAW_DELTA: %s" % raw_delta
+        #print("\nRAW_DELTA: %s" % raw_delta)
         self.assertEqual(None, raw_delta)
     
 

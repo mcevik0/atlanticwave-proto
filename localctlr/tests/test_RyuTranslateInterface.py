@@ -1,3 +1,4 @@
+from __future__ import print_function
 # Copyright 2016 - Sean Donovan
 # AtlanticWave/SDX Project
 
@@ -21,7 +22,7 @@ from ryu.ofproto.ofproto_v1_3_parser import *
 DEFAULT_SLEEP_TIME=0.1
 
 def print_callback(msg, val):
-    print "%s: %s" % (msg, val)
+    print("%s: %s" % (msg, val))
 
 class RyuTranslateInit(unittest.TestCase):
     
@@ -133,15 +134,15 @@ class RyuTranslateTests(unittest.TestCase):
         self.logger.debug("OUTPUT OF ovs-ofctl dump-flows br_ovs:\n%s\n" % 
                           output)
         match = output.split("priority=100,")[1].split(" ")[0]
-        print "Installation: %s" % output
-        print "\n    ofm:   %s" % str(ofm)
-        print "    match: %s\n" % match
+        print("Installation: %s" % output)
+        print("\n    ofm:   %s" % str(ofm))
+        print("    match: %s\n" % match)
 
 
         self.ctlrint.remove_rule(self.switch_id, self.cookie)
         sleep(DEFAULT_SLEEP_TIME)
         output = subprocess.check_output(['ovs-ofctl', 'dump-flows', 'br_ovs'])
-#        print "Removal: %s" % output
+#        print("Removal: %s" % output)
         removalmatch = re.search("priority=100,", output)
         # ''
         self.failUnlessEqual(removalmatch, None) # Removal Failure
@@ -233,7 +234,7 @@ class RyuTranslateTests(unittest.TestCase):
         rule = MatchActionLCRule(self.switch_id, matches, actions)
         rule.set_cookie(self.cookie)
 
-#        print "\n\n"
+#        print("\n\n")
 
         self.ctlrint.send_command(self.switch_id, rule)
         sleep(DEFAULT_SLEEP_TIME)
@@ -245,11 +246,11 @@ class RyuTranslateTests(unittest.TestCase):
         for line in lines:
             if None != re.search("priority=100,", line):
                 action = line.split("actions=")[1].strip()#.split(" ")[0]
-#                print "Action:    %s" %action
+#                print("Action:    %s" %action)
                 break
-#        print "Installation: %s" % output
-#        print "\n    ofa:    %s" % str(ofa)
-#        print "    action: %s" % action
+#        print("Installation: %s" % output)
+#        print("\n    ofa:    %s" % str(ofa))
+#        print("    action: %s" % action)
 
         #sleep(50)
 
@@ -258,7 +259,7 @@ class RyuTranslateTests(unittest.TestCase):
         sleep(DEFAULT_SLEEP_TIME)
         output = subprocess.check_output(['ovs-ofctl', 'dump-flows', 
                                           '-O', 'OpenFlow13', 'br_ovs'])
-#        print "Removal: %s" % output
+#        print("Removal: %s" % output)
         removalmatch = re.search("priority=100,", output)
         
         # ''

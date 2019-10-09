@@ -1,3 +1,4 @@
+from __future__ import print_function
 # From https://bitbucket.org/berkeleylab/sensenrm-oscars/src/d09db31aecbe7654f03f15eed671c0675c5317b5/sensenrm_server.py?at=master&fileviewer=file-view-default
 
 import base64
@@ -20,7 +21,7 @@ def data_b64decode_gunzip(tcontent):
 usage = "python encode-decode.py <encode|decode> <input-filename.txt> <output-filename>"
 
 if len(sys.argv) != 4:
-    print usage
+    print(usage)
     exit
 
 inputfilename = sys.argv[2]
@@ -36,7 +37,7 @@ elif sys.argv[1].lower() == 'decode':
         output = data_b64decode_gunzip(inputfile.read())
 
 else:
-    print usage
+    print(usage)
     exit
 
 with open(outputfilename, 'w') as outputfile:

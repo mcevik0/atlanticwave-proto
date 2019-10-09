@@ -493,9 +493,9 @@ class PolicyManager(AtlanticWaveManager):
             remove_time  = datetime.strptime(policy.get_stop_time(), 
                                              rfc3339format)
 
-#        print "Now     : %s" % now
-#        print "Install : %s" % install_time
-#        print "Remove  : %s" % remove_time
+#        print("Now     : %s" % now)
+#        print("Install : %s" % install_time)
+#        print("Remove  : %s" % remove_time)
 
         if remove_time != None and now >= remove_time:
             self.dlogger.info("  EXPIRED_POLICY")

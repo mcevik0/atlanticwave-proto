@@ -1,3 +1,4 @@
+from __future__ import print_function
 # Copyright 2016 - Sean Donovan
 # AtlanticWave/SDX Project
 
@@ -44,8 +45,8 @@ class VerifyTopoTest(unittest.TestCase):
                           'br4dtn1', 'br4dtn2',
                           'oneLC'] # The LC counts as a node, just in case.
         nodes = topo.nodes()
-        #print "\nNODES : %s" % nodes
-        #print "EXPECT: %s" % expected_nodes
+        #print("\nNODES : %s" % nodes)
+        #print("EXPECT: %s" % expected_nodes)
         self.assertEquals(len(nodes), len(expected_nodes))
         for node in expected_nodes:
             self.failUnless(node in nodes)
@@ -73,9 +74,9 @@ class VerifyTopoTest(unittest.TestCase):
             self.failUnless(topo.has_edge(a, b))
 
         #import json
-        #print json.dumps(topo.nodes(data=True), indent=1)
-        #print "\n\n"
-        #print json.dumps(topo.edges(data=True), indent=1)
+        #print(json.dumps(topo.nodes(data=True), indent=1))
+        #print("\n\n")
+        #print(json.dumps(topo.edges(data=True), indent=1))
 
 
 class VLANTopoTest(unittest.TestCase):
@@ -127,9 +128,9 @@ class VLANTopoTest(unittest.TestCase):
         self.assertEqual(vlan, 1)
         
         # Add VLAN 1 to one of the points on the path
-        print "\n%s" % man.topo.edge['br3']['br4']
+        print("\n%s" % man.topo.edge['br3']['br4'])
         man.topo.edge["br3"]["br4"]['vlans_in_use'].append(1)
-        print man.topo.edge['br3']['br4']
+        print(man.topo.edge['br3']['br4'])
         
         # Should return 2
         vlan = man.find_vlan_on_path(path)

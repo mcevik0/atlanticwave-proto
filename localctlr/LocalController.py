@@ -11,7 +11,6 @@ import signal
 import os
 import atexit
 import traceback
-from Queue import Queue, Empty
 from time import sleep
 
 from lib.AtlanticWaveModule import AtlanticWaveModule
@@ -25,8 +24,11 @@ from .switch_messages import *
 import sys
 if sys.version_info[0] < 3:
     import cPickle as pickle
+    from Queue import Queue, Empty
 else:
     import pickle
+    from queue import Queue, Empty
+
 LOCALHOST = "127.0.0.1"
 DEFAULT_RYU_CXN_PORT = 55767
 DEFAULT_OPENFLOW_PORT = 6633
