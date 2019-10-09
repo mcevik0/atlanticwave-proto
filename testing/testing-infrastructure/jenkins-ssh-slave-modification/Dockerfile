@@ -6,7 +6,6 @@ MAINTAINER Sean Donovan <sdonovan@gatech.edu>
 
 USER root
 RUN apt update && apt -y install \
-    python3 \
     python-pip \
     openvswitch-switch \
     mininet \
@@ -16,11 +15,14 @@ RUN apt update && apt -y install \
     net-tools \
     tcpdump \
     sudo \
-    apt-utils
+    apt-utils \
+    python3 \
+    python3-pip 
 
 RUN sleep 1
 RUN apt install -y psmisc
 RUN pip install virtualenv
+RUN pip3 install virtualenv
 
 RUN usermod -aG sudo jenkins
 RUN echo "jenkins ALL=(root) NOPASSWD:ALL" > /etc/sudoers  && \
@@ -31,3 +33,4 @@ EXPOSE 6633 6653 6640
 COPY runtime-setup /usr/local/bin/runtime-setup
 
 ENTRYPOINT ["runtime-setup"]
+
