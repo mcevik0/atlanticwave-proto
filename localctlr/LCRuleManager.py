@@ -125,7 +125,7 @@ class LCRuleManager(AtlanticWaveManager):
         # Send Back results.
         retval = [(x['cookie'],
                    x['switch_id'],
-                   pickle.loads(str(x['rule'])),
+                   pickle.loads(x['rule']),
                    x['status']) for x in results]
         return retval
         
