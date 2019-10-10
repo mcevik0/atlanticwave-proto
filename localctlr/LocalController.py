@@ -33,6 +33,13 @@ LOCALHOST = "127.0.0.1"
 DEFAULT_RYU_CXN_PORT = 55767
 DEFAULT_OPENFLOW_PORT = 6633
 
+# Helper due to Python 2 and 3 behaving differently with pickle
+def pickleloads(val):
+    if sys.version_info[0] < 3:
+        return pickle.loads(str(val))
+    else:
+        return pickle.loads(val)
+
 class LocalController(AtlanticWaveModule):
     ''' The Local Controller is responsible for passing messages from the SDX 
         Controller to the switch. It needs two connections to both the SDX 
@@ -352,7 +359,7 @@ class LocalController(AtlanticWaveModule):
         if d == None:
             return None
         val = d['value']
-        return pickle.loads(str(val))
+        return pickleloads(val)
 
     def _get_ryu_config_in_db(self):
         # Returns the ryu configuration dictionary if it exists or None if it
@@ -362,7 +369,7 @@ class LocalController(AtlanticWaveModule):
         if d == None:
             return None
         val = d['value']
-        return pickle.loads(str(val))
+        return pickleloads(val)
 
     def _get_LC_config_in_db(self):
         # Returns the LC configuration dictionary if it exists or None if it
@@ -372,7 +379,7 @@ class LocalController(AtlanticWaveModule):
         if d == None:
             return None
         val = d['value']
-        return pickle.loads(str(val))
+        return pickleloads(val)
     
     def _get_SDX_config_in_db(self):
         # Returns the SDX configuration dictionary if it exists or None if it
@@ -382,7 +389,7 @@ class LocalController(AtlanticWaveModule):
         if d == None:
             return None
         val = d['value']
-        return pickle.loads(str(val))
+        return pickleloads(val)
 
     def _get_manifest_filename_in_db(self):
         # Returns the manifest filename if it exists or None if it does not.
@@ -391,7 +398,7 @@ class LocalController(AtlanticWaveModule):
         if d == None:
             return None
         val = d['value']
-        return pickle.loads(str(val))
+        return pickleloads(val)
 
     def _setup(self, options): 
         self.manifest = options.manifest

@@ -50,6 +50,13 @@ LOCALHOST = "127.0.0.1"
 
 CONF = cfg.CONF
 
+# Helper due to Python 2 and 3 behaving differently with pickle
+def pickleloads(val):
+    if sys.version_info[0] < 3:
+        return pickle.loads(str(val))
+    else:
+        return pickle.loads(val)
+    
 class TranslatedRuleContainer(object):
     ''' Parent class for holding both LC and Corsa rules '''
     pass
@@ -337,7 +344,7 @@ class RyuTranslateInterface(app_manager.RyuApp):
         if d == None:
             return None
         val = d['value']
-        return pickle.loads(str(val))
+        return pickleloads(val)
 
     def _get_switch_internal_config_count(self):
         # Returns a count of internal configs.
@@ -358,7 +365,7 @@ class RyuTranslateInterface(app_manager.RyuApp):
         if d == None:
             return None
         val = d['value']
-        return pickle.loads(str(val))
+        return pickleloads(val)
 
 
     def _get_lcip_in_db(self):
@@ -368,7 +375,7 @@ class RyuTranslateInterface(app_manager.RyuApp):
         if d == None:
             return None
         val = d['value']
-        return pickle.loads(str(val))
+        return pickleloads(val)
 
     def _get_ryu_cxn_port_in_db(self):
         # Returns the Ryu Cxn Port if it exists or None if it does not.
@@ -377,7 +384,7 @@ class RyuTranslateInterface(app_manager.RyuApp):
         if d == None:
             return None
         val = d['value']
-        return pickle.loads(str(val))
+        return pickleloads(val)
 
 
     def _setup(self):
@@ -1624,8 +1631,8 @@ class RyuTranslateInterface(app_manager.RyuApp):
         if result == None:
             return (None, None, None, None)
         return (result['switchcookie'],
-                pickle.loads(str(result['sdxrule'])),
-                pickle.loads(str(result['switchrules'])),
+                pickleloads(result['sdxrule']),
+                pickleloads(result['switchrules']),
                 result['switchtable'])
         
         

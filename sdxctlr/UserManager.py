@@ -16,7 +16,13 @@ if sys.version_info[0] < 3:
 else:
     import pickle
 
-
+# Helper due to Python 2 and 3 behaving differently with pickle
+def pickleloads(val):
+    if sys.version_info[0] < 3:
+        return pickle.loads(str(val))
+    else:
+        return pickle.loads(val)
+    
 class UserManager(AtlanticWaveManager):
     
     def __init__(self, db_filename, manifest, loggeridprefix='sdxcontroller'):
@@ -96,9 +102,9 @@ class UserManager(AtlanticWaveManager):
         temp_user['contact'] = user['contact']
         temp_user['type'] = user['type']
         temp_user['permitted_actions'] = pickle.loads(
-            str(user['permitted_actions']))
+            user['permitted_actions'])
         temp_user['restrictions'] = pickle.loads(
-            str(user['restrictions']))
+            user['restrictions'])
         return temp_user
 
     

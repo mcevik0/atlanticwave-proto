@@ -91,6 +91,13 @@ fullurn = baseurn + "atlanticwave-sdx.net"
 awaveurn = "urn:ogf:network:atlanticwave-sdx.net"
 
 
+# Helper due to Python 2 and 3 behaving differently with pickle
+def pickleloads(val):
+    if sys.version_info[0] < 3:
+        return pickle.loads(str(val))
+    else:
+        return pickle.loads(val)
+
 class SenseAPIError(Exception):
     pass
 
@@ -280,7 +287,7 @@ class SenseAPI(AtlanticWaveManager):
         print("\n\n&&&&& POLICY_HASHES &&&&&")
         for h in hashes:
             print("%s - %s %s" % (h['hash'], h['delta_id'],
-                                  pickle.loads(str(h['policy']))))
+                                  pickleloads(h['policy'])))
         print("&&&&&        &&&&&\n\n")
 
         
@@ -1395,9 +1402,9 @@ services[uuid][svc]))
         
         # Unpickle the pickled values and rebuild dictionary to return
         delta = {'delta_id':raw_delta['delta_id'],
-                 'raw_request':pickle.loads(str(raw_delta['raw_request'])),
-                 'addition':pickle.loads(str(raw_delta['addition'])),
-                 'reduction':pickle.loads(str(raw_delta['reduction'])),
+                 'raw_request':pickleloads(raw_delta['raw_request']),
+                 'addition':pickleloads(raw_delta['addition']),
+                 'reduction':pickleloads(raw_delta['reduction']),
                  'status':raw_delta['status'],
                  'last_modified':raw_delta['last_modified'],
                  'timestamp':raw_delta['timestamp'],
@@ -1435,7 +1442,7 @@ services[uuid][svc]))
         print("\n\nPOLICY: %s" % policy)
 
         for raw_hash in self.hash_table.find():
-            if pickle.loads(str(raw_hash['policy'])) == policy:
+            if pickleloads(raw_hash['policy']) == policy:
                 policy_hash = raw_hash['hash']
                 self.dlogger.debug(
                     "_get_policy_hash_by_policy() successful %s" % policy_hash)
@@ -1494,7 +1501,7 @@ services[uuid][svc]))
         ''' Helper to convert DB's form to what the endpoints are expecting. '''
         raw_request = delta['raw_request']
         if unpickle:
-            raw_request = pickle.loads(str(raw_request))
+            raw_request = pickleloads(raw_request)
         reduction = raw_request['reduction']
         addition = raw_request['addition']
             
@@ -1612,8 +1619,8 @@ services[uuid][svc]))
         # Unpickle the pickled values and rebuild dictionary to return
         model = {'model_id':raw_model['model_id'],
                  'model_data':raw_model['model_data'],
-                 'model_raw_info':pickle.loads(str(
-                     raw_model['model_raw_info'])),
+                 'model_raw_info':pickleloads(
+                     raw_model['model_raw_info']),
                  'timestamp':raw_model['timestamp']}
 
         self.dlogger.debug('_get_model_by_id() on %s successful' % model_id)
