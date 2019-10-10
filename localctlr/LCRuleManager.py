@@ -19,6 +19,12 @@ VALID_RULE_STATUSES = [RULE_STATUS_ACTIVE,
                        RULE_STATUS_INSTALLING,
                        RULE_STATUS_REMOVED]
 
+# Helper due to Python 2 and 3 behaving differently with pickle
+def pickleloads(val):
+    if sys.version_info[0] < 3:
+        return pickle.loads(str(val))
+    else:
+        return pickle.loads(val)
 
 class LCRuleManagerError(Exception):
     pass
@@ -125,7 +131,7 @@ class LCRuleManager(AtlanticWaveManager):
         # Send Back results.
         retval = [(x['cookie'],
                    x['switch_id'],
-                   pickle.loads(x['rule']),
+                   pickleloads(x['rule']),
                    x['status']) for x in results]
         return retval
         
@@ -142,11 +148,11 @@ class LCRuleManager(AtlanticWaveManager):
         if full_tuple:
             retval = [(x['cookie'],
                        x['switch_id'],
-                       pickle.loads(str(x['rule'])),
+                       pickleloads(x['rule']),
                        x['status']) for x in rules]
             return retval
 
-        retval = [pickle.loads(str(x['rule'])) for x in rules]
+        retval = [pickleloads(x['rule']) for x in rules]
         return retval
 
     def add_initial_rule(self, rule, cookie, switch_id):
