@@ -19,7 +19,7 @@ from time import sleep
 FNULL = open(os.devnull, 'w')
 
 NAME = "atl"
-MANIFEST = os.getcwd() + '/rtitest.manifest'
+TOPO_CONFIG_FILE = os.path.dirname(os.path.realpath(__file__)) +'/rtitest.manifest'
 IP = "127.0.0.1"
 RYUCXNPORT = 55767
 OFPORT = 6633
@@ -54,7 +54,7 @@ class RyuControllerInterfaceInit(unittest.TestCase):
 
     def test_basic_init(self):
         self.logger.warning("BEGIN %s" % (self.id()))
-        self.ctlrint = RyuControllerInterface(NAME, MANIFEST, IP, 
+        self.ctlrint = RyuControllerInterface(NAME, TOPO_CONFIG_FILE, IP, 
                                          RYUCXNPORT, OFPORT,
                                          lccallback,
                                          run_ryu_manager=False,
@@ -84,7 +84,7 @@ class RyuControllerInterfaceSendRecv(unittest.TestCase):
         
     def test_send_recv(self):
         self.logger.warning("BEGIN %s" % (self.id()))
-        self.ctlrint = RyuControllerInterface(NAME, MANIFEST, IP, 
+        self.ctlrint = RyuControllerInterface(NAME, TOPO_CONFIG_FILE, IP, 
                                          RYUCXNPORT, OFPORT,
                                          lccallback,
                                          run_ryu_manager=False,
@@ -134,7 +134,7 @@ class RyuControllerFullTests(unittest.TestCase):
 
         # Setup RyuControllerInterface, which sets up RyuTranslateInterface
         # Only returns once RyuTranslateInterface has a datapath.
-        cls.ctlrint = RyuControllerInterface(NAME, MANIFEST, IP, 
+        cls.ctlrint = RyuControllerInterface(NAME, TOPO_CONFIG_FILE, IP, 
                                              RYUCXNPORT, OFPORT,
                                              lccallback)
 

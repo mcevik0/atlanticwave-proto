@@ -20,7 +20,7 @@ from time import sleep
 from ryu.ofproto.ofproto_v1_3_parser import *
 
 DEFAULT_SLEEP_TIME=0.1
-
+TOPO_CONFIG_FILE = os.path.dirname(os.path.realpath(__file__)) +'/rtitest.manifest'
 def print_callback(msg, val):
     print("%s: %s" % (msg, val))
 
@@ -72,7 +72,7 @@ class RyuTranslateTests(unittest.TestCase):
         # Setup RyuControllerInterface, which sets up RyuTranslateInterface
         # Only returns once RyuTranslateInterface has a datapath.
         cls.ctlrint = RyuControllerInterface("atl", 
-                                             os.getcwd() + "/rtitest.manifest",
+                                             TOPO_CONFIG_FILE,
                                              "127.0.0.1", 55767, 6633,
                                              print_callback)
         cls.switch_id = 1
