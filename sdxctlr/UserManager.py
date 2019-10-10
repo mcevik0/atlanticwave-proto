@@ -101,9 +101,9 @@ class UserManager(AtlanticWaveManager):
         temp_user['organization'] = user['organization']
         temp_user['contact'] = user['contact']
         temp_user['type'] = user['type']
-        temp_user['permitted_actions'] = pickle.loads(
+        temp_user['permitted_actions'] = pickleloads(
             user['permitted_actions'])
-        temp_user['restrictions'] = pickle.loads(
+        temp_user['restrictions'] = pickleloads(
             user['restrictions'])
         return temp_user
 
