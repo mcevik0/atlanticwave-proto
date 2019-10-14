@@ -12,8 +12,10 @@ from lib.Connection import *
 import sys
 if sys.version_info[0] < 3:
     import cPickle as pickle
+    maxint = sys.maxint
 else:
     import pickle
+    maxint = sys.maxsize
 
 
 
@@ -85,9 +87,14 @@ class SendTest(unittest.TestCase):
             while True:
                 total_len = 0
                 total_data = []
-                size = sys.maxint
-                size_data = ''
-                sock_data = ''
+                size = maxint
+                size_data = None
+                sock_data = None
+                if sys.version_info[0] < 3:
+                    size_data = ''
+                else:
+                    size_data = b''
+                    
                 recv_size = 8192
                 while total_len < size:
                     sock_data = connection.recv(recv_size)
@@ -100,14 +107,22 @@ class SendTest(unittest.TestCase):
                                 recv_size = 524288
                             total_data.append(size_data[4:])
                             total_len = sum([len(i) for i in total_data])
-                            data_raw = ''.join(total_data)
+                            data_raw = None
+                            if sys.version_info[0] < 3:
+                                data_raw = ''.join(total_data)
+                            else:
+                                data_raw = b''.join(total_data)
                         else:
                             size_data += sock_data
                         
                     else:
                         total_data.append(sock_data)
                         total_len = sum([len(i) for i in total_data])
-                        data_raw = ''.join(total_data)
+                        data_raw = None
+                        if sys.version_info[0] < 3:
+                            data_raw = ''.join(total_data)
+                        else:
+                            data_raw = b''.join(total_data)
 
                 # Unpickle!
                 data = pickle.loads(data_raw)
@@ -242,7 +257,7 @@ class ValidSelectTest(unittest.TestCase):
 
         readable, writable, exceptional = select(rlist, wlist, xlist, 2.0)
 
-        self.failIf(readable == [])
+        self.assertFalse(readable == [])
 
         self.object_received=cxn.recv()
         self.failUnlessEqual(self.object_received, self.object_to_send)
