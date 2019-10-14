@@ -79,7 +79,7 @@ class Connection(object):
         ''' Receives an item. This is a blocking call. '''
         try:
             # Based on https://code.activestate.com/recipes/408859-socketrecv-three-ways-to-turn-it-into-recvall/
-            sock_data = ''
+            sock_data = None
             size_data = None
             if sys.version_info[0] < 3:
                 size_data = ''
