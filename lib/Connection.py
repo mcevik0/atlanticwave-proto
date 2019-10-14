@@ -80,7 +80,7 @@ class Connection(object):
         try:
             # Based on https://code.activestate.com/recipes/408859-socketrecv-three-ways-to-turn-it-into-recvall/
             sock_data = ''
-            size_data = ''
+            size_data = b""
             while len(size_data) < 4:
                 sock_data = self.sock.recv(4 - len(size_data))
                 size_data += sock_data
@@ -99,7 +99,7 @@ class Connection(object):
                 recv_size = size - total_len
                 if recv_size > 524388:
                     recv_size = 524288
-            data_raw = ''.join(total_data)
+            data_raw = b''.join(total_data)
 
             # Unpickle!
             data = pickle.loads(data_raw)
@@ -156,7 +156,7 @@ class Connection(object):
             while True:
                 data = self.recv()
                 self.recv_cb(data)
-        except Error as e:
+        except Exception as e:
             # Likely connection going down.
             pass
         
