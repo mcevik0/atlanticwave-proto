@@ -4,7 +4,6 @@
 
 import socket
 import select as pyselect
-import cPickle as pickle
 import logging
 import threading
 import sys
