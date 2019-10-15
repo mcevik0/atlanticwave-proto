@@ -1,6 +1,6 @@
 from __future__ import print_function
 from __future__ import absolute_import
-# Copyrightg 2016 - Sean Donovan
+# Copyright 2016 - Sean Donovan
 # AtlanticWave/SDX Project
 
 

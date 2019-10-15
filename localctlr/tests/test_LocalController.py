@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 # Copyright 2016 - Sean Donovan
 # AtlanticWave/SDX Project
 
@@ -9,7 +10,7 @@ import mock
 import subprocess
 import os
 from localctlr.LocalController import *
-from RemoteControllerHarness import RemoteControllerHarness
+from .RemoteControllerHarness import RemoteControllerHarness
 from time import sleep
 
 FNULL = open(os.devnull, 'w')
