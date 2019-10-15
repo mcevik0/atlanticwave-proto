@@ -180,6 +180,8 @@ class RyuControllerFullTests(unittest.TestCase):
         self.ctlrint.remove_rule(self.switch_id, rule.get_cookie())
         sleep(1) # To make sure the rule changes have propogated.
         output = subprocess.check_output(['ovs-ofctl', '-O', 'OpenFlow13','dump-flows', 'br_ovs'])
+        if sys.version_info[0] >= 3:
+            output = output.decode("utf-8")
         print("\nREMOVE OUTPUT: %s\n" % output)
         rmlines = output.split('\n')
 
