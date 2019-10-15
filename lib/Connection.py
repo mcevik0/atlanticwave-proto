@@ -10,6 +10,11 @@ import threading
 import sys
 import struct
 
+if sys.version_info[0] < 3:
+    import cPickle as pickle
+else:
+    import pickle
+
 class ConnectionTypeError(TypeError):
     pass
 
@@ -152,7 +157,7 @@ class Connection(object):
             while True:
                 data = self.recv()
                 self.recv_cb(data)
-        except Error as e:
+        except Exception as e:
             # Likely connection going down.
             pass
         
