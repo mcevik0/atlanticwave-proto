@@ -11,6 +11,7 @@ import subprocess
 import os
 import re
 import logging
+import sys
 from localctlr.RyuTranslateInterface import *
 from localctlr.RyuControllerInterface import *
 
@@ -82,6 +83,8 @@ class RyuTranslateTests(unittest.TestCase):
         loop = 0
         while loop < 200:
             output = subprocess.check_output(['ovs-vsctl','show'])
+            if sys.version_info[0] >= 3:
+                output = output.decode("utf-8")
             #cls.logger.debug("SECOND output of ovs-vsctl show\n%s\n" % output)
             #cls.logger.info(str(output))
             nuts = "is_connected" in str(output)
@@ -131,6 +134,8 @@ class RyuTranslateTests(unittest.TestCase):
         sleep(DEFAULT_SLEEP_TIME)#*100)
 
         output = subprocess.check_output(['ovs-ofctl', 'dump-flows', 'br_ovs'])
+        if sys.version_info[0] >= 3:
+            output = output.decode("utf-8")
         self.logger.debug("OUTPUT OF ovs-ofctl dump-flows br_ovs:\n%s\n" % 
                           output)
         match = output.split("priority=100,")[1].split(" ")[0]
@@ -142,6 +147,8 @@ class RyuTranslateTests(unittest.TestCase):
         self.ctlrint.remove_rule(self.switch_id, self.cookie)
         sleep(DEFAULT_SLEEP_TIME)
         output = subprocess.check_output(['ovs-ofctl', 'dump-flows', 'br_ovs'])
+        if sys.version_info[0] >= 3:
+            output = output.decode("utf-8")
 #        print("Removal: %s" % output)
         removalmatch = re.search("priority=100,", output)
         # ''
@@ -241,6 +248,9 @@ class RyuTranslateTests(unittest.TestCase):
 
         output = subprocess.check_output(['ovs-ofctl', 'dump-flows', 
                                           '-O', 'OpenFlow13', 'br_ovs'])
+        if sys.version_info[0] >= 3:
+            output = output.decode("utf-8")
+        
         lines = output.split("\n")
         action = ""
         for line in lines:
@@ -259,6 +269,9 @@ class RyuTranslateTests(unittest.TestCase):
         sleep(DEFAULT_SLEEP_TIME)
         output = subprocess.check_output(['ovs-ofctl', 'dump-flows', 
                                           '-O', 'OpenFlow13', 'br_ovs'])
+        if sys.version_info[0] >= 3:
+            output = output.decode("utf-8")
+
 #        print("Removal: %s" % output)
         removalmatch = re.search("priority=100,", output)
         
