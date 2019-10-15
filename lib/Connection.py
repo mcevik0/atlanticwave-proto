@@ -79,36 +79,58 @@ class Connection(object):
         ''' Receives an item. This is a blocking call. '''
         try:
             # Based on https://code.activestate.com/recipes/408859-socketrecv-three-ways-to-turn-it-into-recvall/
-            sock_data = ''
-            size_data = ''
-            data_raw = ''
-            if sys.version_info[0] >= 3:
-                sock_data = b''
-                size_data = b''
-                data_raw = b''
-            while len(size_data) < 4:
-                sock_data = self.sock.recv(4 - len(size_data))
-                size_data += sock_data
-                if len(size_data) == 4:
-                    size = struct.unpack('>i', size_data)[0]
+            if sys.version_info[0] < 3:
+                sock_data = ''
+                size_data = ''
+                while len(size_data) < 4:
+                    sock_data = self.sock.recv(4 - len(size_data))
+                    size_data += sock_data
+                    if len(size_data) == 4:
+                        size = struct.unpack('>i', size_data)[0]
 
-            total_len = 0
-            total_data = []
-            recv_size = size
-            if recv_size > 524388:
-                recv_size = 524288
-            while total_len < size:
-                sock_data = self.sock.recv(recv_size)
-                total_data.append(sock_data)
-                total_len = sum([len(i) for i in total_data])
-                recv_size = size - total_len
+                total_len = 0
+                total_data = []
+                recv_size = size
                 if recv_size > 524388:
                     recv_size = 524288
-            data_raw = data_raw.join(total_data)
+                while total_len < size:
+                    sock_data = self.sock.recv(recv_size)
+                    total_data.append(sock_data)
+                    total_len = sum([len(i) for i in total_data])
+                    recv_size = size - total_len
+                    if recv_size > 524388:
+                        recv_size = 524288
+                data_raw = ''.join(total_data)
 
-            # Unpickle!
-            data = pickle.loads(data_raw)
-            return data
+                # Unpickle!
+                data = pickle.loads(data_raw)
+                return data
+            else:
+                sock_data = b''
+                size_data = b''
+                while len(size_data) < 4:
+                    sock_data = self.sock.recv(4 - len(size_data))
+                    size_data += sock_data
+                    if len(size_data) == 4:
+                        size = struct.unpack('>i', size_data)[0]
+
+                total_len = 0
+                total_data = []
+                recv_size = size
+                if recv_size > 524388:
+                    recv_size = 524288
+                while total_len < size:
+                    sock_data = self.sock.recv(recv_size)
+                    total_data.append(sock_data)
+                    total_len = sum([len(i) for i in total_data])
+                    recv_size = size - total_len
+                    if recv_size > 524388:
+                        recv_size = 524288
+                data_raw = b''.join(total_data)
+
+                # Unpickle!
+                data = pickle.loads(data_raw)
+                return data
 
         except:
             raise
