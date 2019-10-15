@@ -10,7 +10,7 @@ import mock
 import subprocess
 import os
 from localctlr.LocalController import *
-from .RemoteControllerHarness import RemoteControllerHarness
+from localctlr.tests.RemoteControllerHarness import RemoteControllerHarness
 from time import sleep
 
 FNULL = open(os.devnull, 'w')
