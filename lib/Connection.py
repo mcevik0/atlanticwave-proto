@@ -4,15 +4,11 @@
 
 import socket
 import select as pyselect
+import cPickle as pickle
 import logging
 import threading
 import sys
 import struct
-
-if sys.version_info[0] < 3:
-    import cPickle as pickle
-else:
-    import pickle
 
 class ConnectionTypeError(TypeError):
     pass
@@ -79,12 +75,8 @@ class Connection(object):
         ''' Receives an item. This is a blocking call. '''
         try:
             # Based on https://code.activestate.com/recipes/408859-socketrecv-three-ways-to-turn-it-into-recvall/
-            sock_data = None
-            size_data = None
-            if sys.version_info[0] < 3:
-                size_data = ''
-            else:
-                size_data = b''
+            sock_data = ''
+            size_data = ''
             while len(size_data) < 4:
                 sock_data = self.sock.recv(4 - len(size_data))
                 size_data += sock_data
@@ -103,12 +95,7 @@ class Connection(object):
                 recv_size = size - total_len
                 if recv_size > 524388:
                     recv_size = 524288
-
-            data_raw = None
-            if sys.version_info[0] < 3:
-                data_raw = ''.join(total_data)
-            else:
-                data_raw = b''.join(total_data)
+            data_raw = ''.join(total_data)
 
             # Unpickle!
             data = pickle.loads(data_raw)
@@ -165,7 +152,7 @@ class Connection(object):
             while True:
                 data = self.recv()
                 self.recv_cb(data)
-        except Exception as e:
+        except Error as e:
             # Likely connection going down.
             pass
         
