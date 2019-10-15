@@ -8,6 +8,7 @@ import mock
 import subprocess
 import os
 import logging
+import sys
 from localctlr.RyuControllerInterface import *
 from localctlr.RyuTranslateInterface import *
 from shared.MatchActionLCRule import *
@@ -171,6 +172,8 @@ class RyuControllerFullTests(unittest.TestCase):
         sleep(1) # To make sure the rule changes have propogated.
                  # 0.1 second isn't enough
         output = subprocess.check_output(['ovs-ofctl', '-O', 'OpenFlow13','dump-flows', 'br_ovs'])
+        if sys.version_info[0] >= 3:
+            output = output.decode("utf-8")
         print("\nINSTALL OUTPUT: %s\n" % output)
         lines = output.split('\n')
 
