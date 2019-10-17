@@ -9,6 +9,7 @@ import unittest
 import mock
 import subprocess
 import os
+import sys
 from localctlr.LocalController import *
 from localctlr.tests.RemoteControllerHarness import RemoteControllerHarness
 from time import sleep
@@ -134,12 +135,16 @@ class LocalControllerTest(unittest.TestCase):
         sleep(1) # To make sure the rule changes have propogated.
                  # 0.1 second isn't enough
         output = subprocess.check_output(['ovs-ofctl', '-O', 'OpenFlow13','dump-flows', 'br_ovs'])
+        if sys.version_info[0] >= 3:
+            output = output.decode("utf-8")
         self.logger.debug("INSTALL OUTPUT: %s" % output)
         lines = output.split('\n')
 
         self.harness.send_rm_command(self.harness.examples[num])
         sleep(1) # To make sure the rule changes have propogated.
         output = subprocess.check_output(['ovs-ofctl', '-O', 'OpenFlow13','dump-flows', 'br_ovs'])
+        if sys.version_info[0] >= 3:
+            output = output.decode("utf-8")
         self.logger.debug("REMOVE OUTPUT: %s" % output)
         rmlines = output.split('\n')
 
