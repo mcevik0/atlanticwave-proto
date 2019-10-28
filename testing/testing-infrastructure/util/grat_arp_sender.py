@@ -3,13 +3,6 @@
 
 ####################
 # This is a helper tool. It sends Gratuitous ARPs when requested.
-t's an ARP sender that continuously sends arps.
-# It's pretty ugly how it works. You set the values that you want to use in the
-# variables at the very top.
-#
-# ARP_INTERVAL - Interval in seconds for sending an ARP. If set to 0 (or less),
-#                ARPs will not be sent automatically, just in response
-# OUTPUT_PORT  - OF Port to send data out of.
 #
 # Based on ryu/ryu/tests/mininet/packet_lib/arp/test_arp.py
 ####################
@@ -55,7 +48,19 @@ class ArpSender(app_manager.RyuApp):
 
     def __init__(self, *args, **kwargs):
         super(ArpSender, self).__init__(*args, **kwargs)
+        self.arp_thread = None
         LOG.debug("ArpSender - INIT COMPLETE")
+        
+        self.count = ''
+        while self.count == '':
+            try:
+                self.count = input("Count (<= 0 to quit): ")
+            except:
+                print("EOF")
+        self.src_mac  = raw_input("src mac: ")
+        self.dst_ip   = raw_input("Dst ip: ")
+        self.ofport   = input("ofport: ")
+        self.interval = raw_input("Interval in Seconds: ")
 
     def _arp_thread(self, interval, dp):
         count = 0
@@ -67,27 +72,18 @@ class ArpSender(app_manager.RyuApp):
             count += 1
 
     def _grat_arp_thread(self, dp):
-        count = input("Count (<= 0 to quit): ")
-        while(count > 0):
-            src_mac  = input("src mac: ")
-            dst_ip   = input("Dst ip: ")
-            ofport   = input("ofport: ")
-            interval = input("Interval in Seconds: ") 
-
-            while(count > 0):
-                pkt = self._build_arp_(arp.ARP_REPLY, dst_ip, src_mac)
-                LOG.debug("--- Sending ARP count %d, ofport %d: %s" %
-                          (count, ofport, pkt))
-                self._send_msg(dp, ofport, pkt)
-                count -= 1
-                sleep(interval)
-            
-            interval = input("Interval (<= 0 to quit): ")
+        while(self.count > 0):
+            pkt = self._build_arp(arp.ARP_REPLY, self.dst_ip, self.src_mac)
+            LOG.debug("--- Sending ARP count %d, ofport %d: %s" %
+                      (self.count, self.ofport, pkt))
+            self._send_msg(dp, self.ofport, pkt)
+            self.count -= 1
+            sleep(float(self.interval))
 
 
     def _send_msg(self, dp, output_port, data):
         buffer_id = 0xffffffff
-        in_port = dp.ofproto.OFPP_LOCAL
+        in_port = dp.ofproto.OFPP_CONTROLLER
         actions = [dp.ofproto_parser.OFPActionOutput(output_port, 0)]
         msg = dp.ofproto_parser.OFPPacketOut(
             dp, buffer_id, in_port, actions, data)
@@ -126,7 +122,9 @@ class ArpSender(app_manager.RyuApp):
         e = ethernet.ethernet(dst_mac, self.RYU_MAC, ethertype)
         return e
 
-    def _build_arp(self, opcode, dst_ip=HOST_IP, src_mac=self.RYU_MAC):
+    def _build_arp(self, opcode, dst_ip=HOST_IP, src_mac=None):
+        if src_mac == None:
+            src_mac = self.RYU_MAC
         if opcode == arp.ARP_REQUEST:
             _eth_dst_mac = self.BROADCAST_MAC
             _arp_dst_mac = self.ZERO_MAC
@@ -232,10 +230,11 @@ class ArpSender(app_manager.RyuApp):
         dp = ev.msg.datapath
         LOG.debug("new DP %s" % dp.id)
 
-        # Start sender thread
-        #self.arp_thread = Thread(target=self._arp_thread,
-        #                         args=(self.ARP_INTERVAL, dp))
-        self.arp_thread = Thread(target=self._grat_arp_thread,
-                                 args=(dp))
-        self.arp_thread.daemon = True
-        self.arp_thread.start()
+        if self.arp_thread == None:
+            # Start sender thread
+            #self.arp_thread = Thread(target=self._arp_thread,
+            #                         args=(self.ARP_INTERVAL, dp))
+            self.arp_thread = Thread(target=self._grat_arp_thread,
+                                     kwargs={'dp':dp})
+            self.arp_thread.daemon = True
+            self.arp_thread.start()
