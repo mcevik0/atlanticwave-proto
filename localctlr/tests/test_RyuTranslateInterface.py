@@ -20,6 +20,8 @@ from shared.LCFields import *
 from time import sleep
 from ryu.ofproto.ofproto_v1_3_parser import *
 
+from traceback import format_stack
+
 DEFAULT_SLEEP_TIME=0.1
 TOPO_CONFIG_FILE = os.path.dirname(os.path.realpath(__file__)) +'/rtitest.manifest'
 def print_callback(msg, val):
@@ -303,6 +305,11 @@ class RyuTranslateTests(unittest.TestCase):
 
     def test_trans_action_Continue(self):
         self.logger.warning("BEGIN %s" % (self.id()))
+        tbs = format_stack()
+        all_tb = "Traceback: id: %s\n" % str(hex(id(self)))
+        for line in tbs:
+            all_tb = all_tb + line
+        self.logger.error(all_tb)
         self.trans_action_test(Continue(),
                                "goto_table:2")
 
