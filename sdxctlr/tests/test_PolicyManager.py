@@ -10,6 +10,8 @@ import threading
 import networkx as nx
 #import mock
 import dataset
+import os
+import logging
 
 from sdxctlr.PolicyManager import *
 from shared.UserPolicy import *
@@ -64,7 +66,28 @@ class UserPolicyStandin(UserPolicy):
 
 
 class SingletonTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+
+        cls.logger = logging.getLogger(cls.__name__)
+        formatter = logging.Formatter('%(asctime)s %(name)-12s: %(thread)s %(levelname)-8s %(message)s')
+        console = logging.StreamHandler()
+        console.setLevel(logging.DEBUG)
+        console.setFormatter(formatter)
+        cls.logger.setLevel(logging.DEBUG)
+        cls.logger.handlers = []
+        cls.logger.addHandler(console)
+
+        cls.logger.debug("Beginning %s:%s" % (os.path.basename(__file__),
+                                              cls.__name__))
+
+        import sys
+        cls.logger.debug("BEGIN %s" % cls.__name__)
+        cls.logger.debug("sys.path: %s" % sys.path)
+        
     def test_singleton(self):
+        self.logger.warning("BEGIN %s" % (self.id()))
+
         topo = TopologyManager(topology_file=TOPO_CONFIG_FILE)
         firstManager = PolicyManager(db, 'sdxcontroller', rmhappy, rmhappy)
         secondManager = PolicyManager(db, 'sdxcontroller', rmhappy, rmhappy)
@@ -72,7 +95,28 @@ class SingletonTest(unittest.TestCase):
         self.failUnless(firstManager is secondManager)
 
 class AddPolicyTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+
+        cls.logger = logging.getLogger(cls.__name__)
+        formatter = logging.Formatter('%(asctime)s %(name)-12s: %(thread)s %(levelname)-8s %(message)s')
+        console = logging.StreamHandler()
+        console.setLevel(logging.DEBUG)
+        console.setFormatter(formatter)
+        cls.logger.setLevel(logging.DEBUG)
+        cls.logger.handlers = []
+        cls.logger.addHandler(console)
+
+        cls.logger.debug("Beginning %s:%s" % (os.path.basename(__file__),
+                                              cls.__name__))
+
+        import sys
+        cls.logger.debug("BEGIN %s" % cls.__name__)
+        cls.logger.debug("sys.path: %s" % sys.path)
+        
     def test_good_test_add_policy(self):
+        self.logger.warning("BEGIN %s" % (self.id()))
+
         topo = TopologyManager(topology_file=TOPO_CONFIG_FILE)
         man = PolicyManager(db, 'sdxcontroller', rmhappy, rmhappy)
         valid_policy = UserPolicyStandin(True, True)
@@ -81,6 +125,8 @@ class AddPolicyTest(unittest.TestCase):
         man.test_add_policy(valid_policy)
 
     def test_invalid_test_add_policy(self):
+        self.logger.warning("BEGIN %s" % (self.id()))
+
         topo = TopologyManager(topology_file=TOPO_CONFIG_FILE)
         man = PolicyManager(db, 'sdxcontroller', rmhappy, rmhappy)
         invalid_policy = UserPolicyStandin(False, True)
@@ -89,6 +135,8 @@ class AddPolicyTest(unittest.TestCase):
                               man.test_add_policy, invalid_policy)
 
     def test_no_breakdown_test_add_policy(self):
+        self.logger.warning("BEGIN %s" % (self.id()))
+
         topo = TopologyManager(topology_file=TOPO_CONFIG_FILE)
         man = PolicyManager(db, 'sdxcontroller', rmhappy, rmhappy)
         invalid_policy = UserPolicyStandin(True, False)
@@ -97,6 +145,8 @@ class AddPolicyTest(unittest.TestCase):
                               man.test_add_policy, invalid_policy)
 
     def test_good_add_policy(self):
+        self.logger.warning("BEGIN %s" % (self.id()))
+
         topo = TopologyManager(topology_file=TOPO_CONFIG_FILE)
         man = PolicyManager(db, 'sdxcontroller', rmhappy, rmhappy)
         valid_policy = UserPolicyStandin(True, True)
@@ -105,6 +155,8 @@ class AddPolicyTest(unittest.TestCase):
         self.failUnless(isinstance(man.add_policy(valid_policy), int))
 
     def test_invalid_add_policy(self):
+        self.logger.warning("BEGIN %s" % (self.id()))
+
         topo = TopologyManager(topology_file=TOPO_CONFIG_FILE)
         man = PolicyManager(db, 'sdxcontroller', rmhappy, rmhappy)
         invalid_policy = UserPolicyStandin(False, True)
@@ -113,6 +165,8 @@ class AddPolicyTest(unittest.TestCase):
                               man.add_policy, invalid_policy)
 
     def test_no_breakdown_add_policy(self):
+        self.logger.warning("BEGIN %s" % (self.id()))
+
         topo = TopologyManager(topology_file=TOPO_CONFIG_FILE)
         man = PolicyManager(db, 'sdxcontroller', rmhappy, rmhappy)
         invalid_policy = UserPolicyStandin(True, False)
@@ -121,7 +175,28 @@ class AddPolicyTest(unittest.TestCase):
                               man.add_policy, invalid_policy)
 
 class RemovePolicyTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+
+        cls.logger = logging.getLogger(cls.__name__)
+        formatter = logging.Formatter('%(asctime)s %(name)-12s: %(thread)s %(levelname)-8s %(message)s')
+        console = logging.StreamHandler()
+        console.setLevel(logging.DEBUG)
+        console.setFormatter(formatter)
+        cls.logger.setLevel(logging.DEBUG)
+        cls.logger.handlers = []
+        cls.logger.addHandler(console)
+
+        cls.logger.debug("Beginning %s:%s" % (os.path.basename(__file__),
+                                              cls.__name__))
+
+        import sys
+        cls.logger.debug("BEGIN %s" % cls.__name__)
+        cls.logger.debug("sys.path: %s" % sys.path)
+        
     def test_good_remove_policy(self):
+        self.logger.warning("BEGIN %s" % (self.id()))
+
         topo = TopologyManager(topology_file=TOPO_CONFIG_FILE)
         man = PolicyManager(db, 'sdxcontroller', rmhappy, rmhappy)
         valid_policy = UserPolicyStandin(True, True)
@@ -135,7 +210,28 @@ class RemovePolicyTest(unittest.TestCase):
         self.failUnless(man.get_policy_details(hash) == None)
 
 class GetPolicies(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+
+        cls.logger = logging.getLogger(cls.__name__)
+        formatter = logging.Formatter('%(asctime)s %(name)-12s: %(thread)s %(levelname)-8s %(message)s')
+        console = logging.StreamHandler()
+        console.setLevel(logging.DEBUG)
+        console.setFormatter(formatter)
+        cls.logger.setLevel(logging.DEBUG)
+        cls.logger.handlers = []
+        cls.logger.addHandler(console)
+
+        cls.logger.debug("Beginning %s:%s" % (os.path.basename(__file__),
+                                              cls.__name__))
+
+        import sys
+        cls.logger.debug("BEGIN %s" % cls.__name__)
+        cls.logger.debug("sys.path: %s" % sys.path)
+        
     def test_get_policies(self):
+        self.logger.warning("BEGIN %s" % (self.id()))
+
         topo = TopologyManager(topology_file=TOPO_CONFIG_FILE)
         man = PolicyManager(db, 'sdxcontroller', rmhappy, rmhappy)
         valid_policy = UserPolicyStandin(True, True)
@@ -145,7 +241,28 @@ class GetPolicies(unittest.TestCase):
 
 
 class RemoveAllPolicies(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+
+        cls.logger = logging.getLogger(cls.__name__)
+        formatter = logging.Formatter('%(asctime)s %(name)-12s: %(thread)s %(levelname)-8s %(message)s')
+        console = logging.StreamHandler()
+        console.setLevel(logging.DEBUG)
+        console.setFormatter(formatter)
+        cls.logger.setLevel(logging.DEBUG)
+        cls.logger.handlers = []
+        cls.logger.addHandler(console)
+
+        cls.logger.debug("Beginning %s:%s" % (os.path.basename(__file__),
+                                              cls.__name__))
+
+        import sys
+        cls.logger.debug("BEGIN %s" % cls.__name__)
+        cls.logger.debug("sys.path: %s" % sys.path)
+        
     def test_remove_all_policies(self):
+        self.logger.warning("BEGIN %s" % (self.id()))
+
         topo = TopologyManager(topology_file=TOPO_CONFIG_FILE)
         man = PolicyManager(db, 'sdxcontroller', rmhappy, rmhappy)
         valid_policy = UserPolicyStandin(True, True)

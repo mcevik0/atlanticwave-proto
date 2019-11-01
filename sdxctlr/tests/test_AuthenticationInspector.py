@@ -7,18 +7,58 @@
 import unittest
 import threading
 #import mock
+import os
 
 from sdxctlr.AuthenticationInspector import *
 
 
 class SingletonTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.logger = logging.getLogger(cls.__name__)
+        formatter = logging.Formatter('%(asctime)s %(name)-12s: %(thread)s %(levelname)-8s %(message)s')
+        console = logging.StreamHandler()
+        console.setLevel(logging.DEBUG)
+        console.setFormatter(formatter)
+        cls.logger.setLevel(logging.DEBUG)
+        cls.logger.handlers = []
+        cls.logger.addHandler(console)
+
+        cls.logger.debug("Beginning %s:%s" % (os.path.basename(__file__),
+                                              cls.__name__))
+
+        import sys
+        cls.logger.debug("BEGIN %s" % cls.__name__)
+        cls.logger.debug("sys.path: %s" % sys.path)
+        
     def test_singleton(self):
+        self.logger.warning("BEGIN %s" % (self.id()))
         firstInspector = AuthenticationInspector()
         secondInspector = AuthenticationInspector()
         self.failUnless(firstInspector is secondInspector)
 
 class AddingUsers(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+
+        cls.logger = logging.getLogger(cls.__name__)
+        formatter = logging.Formatter('%(asctime)s %(name)-12s: %(thread)s %(levelname)-8s %(message)s')
+        console = logging.StreamHandler()
+        console.setLevel(logging.DEBUG)
+        console.setFormatter(formatter)
+        cls.logger.setLevel(logging.DEBUG)
+        cls.logger.handlers = []
+        cls.logger.addHandler(console)
+
+        cls.logger.debug("Beginning %s:%s" % (os.path.basename(__file__),
+                                              cls.__name__))
+
+        import sys
+        cls.logger.debug("BEGIN %s" % cls.__name__)
+        cls.logger.debug("sys.path: %s" % sys.path)
+        
     def test_add_single_user(self):
+        self.logger.warning("BEGIN %s" % (self.id()))
         user = "john"
         credentials = "pa$$word"
         
@@ -27,6 +67,7 @@ class AddingUsers(unittest.TestCase):
         self.failUnless(ai.is_authenticated(user, credentials))
 
     def test_add_many_users(self):
+        self.logger.warning("BEGIN %s" % (self.id()))
         user1 = "natasha"
         credentials1 = "moose"
         user2 = "boris"
@@ -40,6 +81,7 @@ class AddingUsers(unittest.TestCase):
 
 
     def test_overwrite_user(self):
+        self.logger.warning("BEGIN %s" % (self.id()))
         user = "bob"
         credentials1 = "qwerty"
         credentials2 = "asdf"
@@ -55,7 +97,27 @@ class AddingUsers(unittest.TestCase):
                              False)
 
 class NonUserTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+
+        cls.logger = logging.getLogger(cls.__name__)
+        formatter = logging.Formatter('%(asctime)s %(name)-12s: %(thread)s %(levelname)-8s %(message)s')
+        console = logging.StreamHandler()
+        console.setLevel(logging.DEBUG)
+        console.setFormatter(formatter)
+        cls.logger.setLevel(logging.DEBUG)
+        cls.logger.handlers = []
+        cls.logger.addHandler(console)
+
+        cls.logger.debug("Beginning %s:%s" % (os.path.basename(__file__),
+                                              cls.__name__))
+
+        import sys
+        cls.logger.debug("BEGIN %s" % cls.__name__)
+        cls.logger.debug("sys.path: %s" % sys.path)
+        
     def test_non_user(self):
+        self.logger.warning("BEGIN %s" % (self.id()))
         user = "badname"
         credentials = "badnamepw"
         ai = AuthenticationInspector()
@@ -63,6 +125,7 @@ class NonUserTest(unittest.TestCase):
                              False)
 
     def test_bad_password(self):
+        self.logger.warning("BEGIN %s" % (self.id()))
         user = "james"
         credentials = "beard"
         badcredentials = "moustache"

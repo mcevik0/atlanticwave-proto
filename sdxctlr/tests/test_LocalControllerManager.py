@@ -7,24 +7,66 @@
 import unittest
 import threading
 import mock
+import os
+import logging
 
 from sdxctlr.LocalControllerManager import *
 
 CONFIG_FILE = 'sdxctlr/tests/test_manifests/lcmanagertest.manifest'
 class SingletonTest(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+
+        cls.logger = logging.getLogger(cls.__name__)
+        formatter = logging.Formatter('%(asctime)s %(name)-12s: %(thread)s %(levelname)-8s %(message)s')
+        console = logging.StreamHandler()
+        console.setLevel(logging.DEBUG)
+        console.setFormatter(formatter)
+        cls.logger.setLevel(logging.DEBUG)
+        cls.logger.handlers = []
+        cls.logger.addHandler(console)
+
+        cls.logger.debug("Beginning %s:%s" % (os.path.basename(__file__),
+                                              cls.__name__))
+
+        import sys
+        cls.logger.debug("BEGIN %s" % cls.__name__)
+        cls.logger.debug("sys.path: %s" % sys.path)
+        
     @mock.patch('sdxctlr.LocalControllerManager.AuthenticationInspector',
                 autospec=True)
     def test_singleton(self, authentication):
+        self.logger.warning("BEGIN %s" % (self.id()))
         firstManager = LocalControllerManager(manifest=CONFIG_FILE)
         secondManager = LocalControllerManager(manifest=CONFIG_FILE)
 
         self.failUnless(firstManager is secondManager)
 
 class VerifyLCTest(unittest.TestCase):
-    
+    @classmethod
+    def setUpClass(cls):
+
+        cls.logger = logging.getLogger(cls.__name__)
+        formatter = logging.Formatter('%(asctime)s %(name)-12s: %(thread)s %(levelname)-8s %(message)s')
+        console = logging.StreamHandler()
+        console.setLevel(logging.DEBUG)
+        console.setFormatter(formatter)
+        cls.logger.setLevel(logging.DEBUG)
+        cls.logger.handlers = []
+        cls.logger.addHandler(console)
+
+        cls.logger.debug("Beginning %s:%s" % (os.path.basename(__file__),
+                                              cls.__name__))
+
+        import sys
+        cls.logger.debug("BEGIN %s" % cls.__name__)
+        cls.logger.debug("sys.path: %s" % sys.path)
+        
     @mock.patch('sdxctlr.LocalControllerManager.AuthenticationInspector',
                 autospec=True)
     def test_get_user(self, authentication):
+        self.logger.warning("BEGIN %s" % (self.id()))
         man = LocalControllerManager(manifest=CONFIG_FILE)
 
         ctlrname = 'atl'
@@ -66,6 +108,7 @@ class VerifyLCTest(unittest.TestCase):
     @mock.patch('sdxctlr.LocalControllerManager.AuthenticationInspector',
                 autospec=True)
     def test_get_bad_ctlr(self, authentication):
+        self.logger.warning("BEGIN %s" % (self.id()))
         man = LocalControllerManager(manifest=CONFIG_FILE)
 
         ctlrname = "NOTREAL"
@@ -124,6 +167,7 @@ class VerifyLCTest(unittest.TestCase):
     @mock.patch('sdxctlr.LocalControllerManager.AuthenticationInspector',
                 autospec=True)
     def test_add_ctlr(self, authentication):
+        self.logger.warning("BEGIN %s" % (self.id()))
         man = LocalControllerManager(manifest=CONFIG_FILE)
 
 

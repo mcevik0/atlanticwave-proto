@@ -61,7 +61,7 @@ class SingletonTest(unittest.TestCase):
         first = RestAPI()
         second = RestAPI()
 
-        self.failUnless(first is second)
+        self.assertTrue(first is second)
 
 
 # Login and Logout tests are unique in that they don't inherit from
