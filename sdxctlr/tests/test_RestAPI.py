@@ -915,7 +915,11 @@ class EP_POLICIES_Test(EndpointTestCase):
         self.assertEqual(len(output['links'].keys()), 1)
 
         # Seriously, this is the easy way of doing it...
-        policynum = output['links'][output['links'].keys()[0]]['policynumber']
+        policynum = None
+        if sys.version_info[0] < 3:
+            policynum = output['links'][output['links'].keys()[0]]['policynumber']
+        else:
+            policynum = output['links'][list(output['links'].keys())[0]]['policynumber']
 
         
         # Build the EP_POLICIES and expected_output with the new-found
@@ -968,7 +972,11 @@ class EP_POLICIESSPEC_Test(EndpointTestCase):
         self.assertEqual(len(output['links'].keys()), 1)
 
         # Seriously, this is the easy way of doing it...
-        policynum = output['links'][output['links'].keys()[0]]['policynumber']
+        policynum = None
+        if sys.version_info[0] < 3:
+            policynum = output['links'][output['links'].keys()[0]]['policynumber']
+        else:
+            policynum = output['links'][list(output['links'].keys())[0]]['policynumber']
 
         
         # Build the EP_POLICIESSPEC and expected_output with the new-found
@@ -1130,7 +1138,12 @@ class EP_POLICIESTYPESPEC_Test(EndpointTestCase):
         self.assertEqual(len(output['links'].keys()), 1)
 
         # Seriously, this is the easy way of doing it...
-        policynum = output['links'][output['links'].keys()[0]]['policynumber']
+        policynum = None
+        if sys.version_info[0] < 3:
+            policynum = output['links'][output['links'].keys()[0]]['policynumber']
+        else:
+            policynum = output['links'][list(output['links'].keys())[0]]['policynumber']
+            
 
         # Run regularly with the new policynum
         
@@ -1189,7 +1202,12 @@ class EP_POLICIESTYPESPEC_POST_Test(EndpointTestCase):
         self.assertEqual(len(output['links'].keys()), 1)
 
         # Seriously, this is the easy way of doing it...
-        FTpolicynum = output['links'][output['links'].keys()[0]]['policynumber']
+        FTpolicynum = None
+        if sys.version_info[0] < 3:
+            FTpolicynum = output['links'][output['links'].keys()[0]]['policynumber']
+        else:
+            FTpolicynum = output['links'][list(output['links'].keys())[0]]['policynumber']
+        
 
         # Find FloodTree policy # and add it to the expected_empty_output
         getendpoint = ENDPOINT_PREFIX + EP_POLICIES
