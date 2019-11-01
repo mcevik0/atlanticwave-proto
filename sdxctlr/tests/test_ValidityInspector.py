@@ -32,7 +32,28 @@ class UserPolicyStandin(UserPolicy):
     
 
 class SingletonTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+
+        cls.logger = logging.getLogger(cls.__name__)
+        formatter = logging.Formatter('%(asctime)s %(name)-12s: %(thread)s %(levelname)-8s %(message)s')
+        console = logging.StreamHandler()
+        console.setLevel(logging.DEBUG)
+        console.setFormatter(formatter)
+        cls.logger.setLevel(logging.DEBUG)
+        cls.logger.handlers = []
+        cls.logger.addHandler(console)
+
+        cls.logger.debug("Beginning %s:%s" % (os.path.basename(__file__),
+                                              cls.__name__))
+
+        import sys
+        cls.logger.debug("BEGIN %s" % cls.__name__)
+        cls.logger.debug("sys.path: %s" % sys.path)
+        
     def test_singleton(self):
+        self.logger.warning("BEGIN %s" % (self.id()))
+
         topo = TopologyManager(topology_file=TOPO_CONFIG_FILE)
         firstInspector = ValidityInspector()
         secondInspector = ValidityInspector()
@@ -42,12 +63,35 @@ class SingletonTest(unittest.TestCase):
 #FIXME: Nothing's mocked here!
 
 class ValidityTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+
+        cls.logger = logging.getLogger(cls.__name__)
+        formatter = logging.Formatter('%(asctime)s %(name)-12s: %(thread)s %(levelname)-8s %(message)s')
+        console = logging.StreamHandler()
+        console.setLevel(logging.DEBUG)
+        console.setFormatter(formatter)
+        cls.logger.setLevel(logging.DEBUG)
+        cls.logger.handlers = []
+        cls.logger.addHandler(console)
+
+        cls.logger.debug("Beginning %s:%s" % (os.path.basename(__file__),
+                                              cls.__name__))
+
+        import sys
+        cls.logger.debug("BEGIN %s" % cls.__name__)
+        cls.logger.debug("sys.path: %s" % sys.path)
+        
     def test_good_valid(self):
+        self.logger.warning("BEGIN %s" % (self.id()))
+
         valid_policy = UserPolicyStandin(True, "")
         inspector = ValidityInspector()
         self.failUnless(inspector.is_valid_policy(valid_policy))
                         
     def test_bad_valid(self):
+        self.logger.warning("BEGIN %s" % (self.id()))
+
         invalid_policy = UserPolicyStandin(False, "")
         inspector = ValidityInspector()
         self.failUnlessRaises(Exception, inspector.is_valid_policy,

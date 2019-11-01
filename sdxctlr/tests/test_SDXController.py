@@ -91,9 +91,30 @@ no_loop_options = Dict2Obj({'manifest':TOPO_CONFIG_FILE,
 
 
 class SingletonTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+
+        cls.logger = logging.getLogger(cls.__name__)
+        formatter = logging.Formatter('%(asctime)s %(name)-12s: %(thread)s %(levelname)-8s %(message)s')
+        console = logging.StreamHandler()
+        console.setLevel(logging.DEBUG)
+        console.setFormatter(formatter)
+        cls.logger.setLevel(logging.DEBUG)
+        cls.logger.handlers = []
+        cls.logger.addHandler(console)
+
+        cls.logger.debug("Beginning %s:%s" % (os.path.basename(__file__),
+                                              cls.__name__))
+
+        import sys
+        cls.logger.debug("BEGIN %s" % cls.__name__)
+        cls.logger.debug("sys.path: %s" % sys.path)
+        
     @mock.patch('sdxctlr.SDXController.SDXControllerConnectionManager', autospec=True)
     @mock.patch('sdxctlr.SDXController.RestAPI', autospec=True)
     def test_singleton(self, restapi, cxm):
+        self.logger.warning("BEGIN %s" % (self.id()))
+
         #part = UserManager(db, PART_CONFIG_FILE)
         #topo = TopologyManager(topology_file=TOPO_CONFIG_FILE)
         #lc = LocalControllerManager(manifest=TOPO_CONFIG_FILE)
@@ -106,10 +127,30 @@ class SingletonTest(unittest.TestCase):
         del secondManager
 
 class AddPolicyTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+
+        cls.logger = logging.getLogger(cls.__name__)
+        formatter = logging.Formatter('%(asctime)s %(name)-12s: %(thread)s %(levelname)-8s %(message)s')
+        console = logging.StreamHandler()
+        console.setLevel(logging.DEBUG)
+        console.setFormatter(formatter)
+        cls.logger.setLevel(logging.DEBUG)
+        cls.logger.handlers = []
+        cls.logger.addHandler(console)
+
+        cls.logger.debug("Beginning %s:%s" % (os.path.basename(__file__),
+                                              cls.__name__))
+
+        import sys
+        cls.logger.debug("BEGIN %s" % cls.__name__)
+        cls.logger.debug("sys.path: %s" % sys.path)
+        
     @mock.patch('sdxctlr.SDXController.SDXControllerConnectionManager', autospec=True)
     @mock.patch('sdxctlr.SDXController.RestAPI', autospec=True)
     def test_add_and_remove_no_exception(self, restapi, cxm):
-        
+        self.logger.warning("BEGIN %s" % (self.id()))
+
         #part = UserManager(db,PART_CONFIG_FILE)
         #topo = TopologyManager(topology_file=TOPO_CONFIG_FILE)
         #lc = LocalControllerManager(manifest=TOPO_CONFIG_FILE)
@@ -126,11 +167,30 @@ class AddPolicyTest(unittest.TestCase):
         
 
 class JsonUploadTest(unittest.TestCase):
-    
+    @classmethod
+    def setUpClass(cls):
+
+        cls.logger = logging.getLogger(cls.__name__)
+        formatter = logging.Formatter('%(asctime)s %(name)-12s: %(thread)s %(levelname)-8s %(message)s')
+        console = logging.StreamHandler()
+        console.setLevel(logging.DEBUG)
+        console.setFormatter(formatter)
+        cls.logger.setLevel(logging.DEBUG)
+        cls.logger.handlers = []
+        cls.logger.addHandler(console)
+
+        cls.logger.debug("Beginning %s:%s" % (os.path.basename(__file__),
+                                              cls.__name__))
+
+        import sys
+        cls.logger.debug("BEGIN %s" % cls.__name__)
+        cls.logger.debug("sys.path: %s" % sys.path)
+        
     @mock.patch('sdxctlr.SDXController.SDXControllerConnectionManager', autospec=True)
     @mock.patch('sdxctlr.SDXController.RestAPI', autospec=True)
     def test_L2_tunnel_upload(self, restapi, cxm):
-        
+        self.logger.warning("BEGIN %s" % (self.id()))
+
         man = PolicyManager('db',)
 
         # Example JSON
@@ -155,7 +215,8 @@ class JsonUploadTest(unittest.TestCase):
     @mock.patch('sdxctlr.SDXController.SDXControllerConnectionManager', autospec=True)
     @mock.patch('sdxctlr.SDXController.RestAPI', autospec=True)
     def test_L2_tunnel_two_site_upload(self, restapi, cxm):
-        
+        self.logger.warning("BEGIN %s" % (self.id()))
+
         man = PolicyManager()
 
         # Example JSON

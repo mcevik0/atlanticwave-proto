@@ -17,24 +17,68 @@ STEINER_NO_LOOP_CONFIG_FILE = 'sdxctlr/tests/test_manifests/steiner-noloop.manif
 STEINER_LOOP_CONFIG_FILE = 'sdxctlr/tests/test_manifests/steiner-loop.manifest'
 
 class SingletonTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+
+        cls.logger = logging.getLogger(cls.__name__)
+        formatter = logging.Formatter('%(asctime)s %(name)-12s: %(thread)s %(levelname)-8s %(message)s')
+        console = logging.StreamHandler()
+        console.setLevel(logging.DEBUG)
+        console.setFormatter(formatter)
+        cls.logger.setLevel(logging.DEBUG)
+        cls.logger.handlers = []
+        cls.logger.addHandler(console)
+
+        cls.logger.debug("Beginning %s:%s" % (os.path.basename(__file__),
+                                              cls.__name__))
+
+        import sys
+        cls.logger.debug("BEGIN %s" % cls.__name__)
+        cls.logger.debug("sys.path: %s" % sys.path)
+        
     def test_singleton(self):
+        self.logger.warning("BEGIN %s" % (self.id()))
+
         firstManager = TopologyManager(topology_file=CONFIG_FILE) 
         secondManager = TopologyManager(topology_file=CONFIG_FILE)
 
         self.failUnless(firstManager is secondManager)
 
 class VerifyTopoTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+
+        cls.logger = logging.getLogger(cls.__name__)
+        formatter = logging.Formatter('%(asctime)s %(name)-12s: %(thread)s %(levelname)-8s %(message)s')
+        console = logging.StreamHandler()
+        console.setLevel(logging.DEBUG)
+        console.setFormatter(formatter)
+        cls.logger.setLevel(logging.DEBUG)
+        cls.logger.handlers = []
+        cls.logger.addHandler(console)
+
+        cls.logger.debug("Beginning %s:%s" % (os.path.basename(__file__),
+                                              cls.__name__))
+
+        import sys
+        cls.logger.debug("BEGIN %s" % cls.__name__)
+        cls.logger.debug("sys.path: %s" % sys.path)
+        
     def setUp(self):
         man = TopologyManager(topology_file=CONFIG_FILE)
         man.topo = nx.Graph()
         man._import_topology(CONFIG_FILE)
         
     def test_get_topo(self):
+        self.logger.warning("BEGIN %s" % (self.id()))
+
         man = TopologyManager(topology_file=CONFIG_FILE)
         topo = man.get_topology()
         self.failUnless(isinstance(topo, nx.Graph))
         
     def test_simple_topo(self):
+        self.logger.warning("BEGIN %s" % (self.id()))
+
         man = TopologyManager(topology_file=CONFIG_FILE)
         topo = man.get_topology()
 
@@ -80,6 +124,25 @@ class VerifyTopoTest(unittest.TestCase):
 
 
 class VLANTopoTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+
+        cls.logger = logging.getLogger(cls.__name__)
+        formatter = logging.Formatter('%(asctime)s %(name)-12s: %(thread)s %(levelname)-8s %(message)s')
+        console = logging.StreamHandler()
+        console.setLevel(logging.DEBUG)
+        console.setFormatter(formatter)
+        cls.logger.setLevel(logging.DEBUG)
+        cls.logger.handlers = []
+        cls.logger.addHandler(console)
+
+        cls.logger.debug("Beginning %s:%s" % (os.path.basename(__file__),
+                                              cls.__name__))
+
+        import sys
+        cls.logger.debug("BEGIN %s" % cls.__name__)
+        cls.logger.debug("sys.path: %s" % sys.path)
+        
     def setUp(self):
         man = TopologyManager(topology_file=CONFIG_FILE)
         man.topo = nx.Graph()
@@ -87,6 +150,8 @@ class VLANTopoTest(unittest.TestCase):
         
     
     def test_path_empty(self):
+        self.logger.warning("BEGIN %s" % (self.id()))
+
         man = TopologyManager(topology_file=CONFIG_FILE)
         topo = man.get_topology()
 
@@ -98,6 +163,8 @@ class VLANTopoTest(unittest.TestCase):
         self.failUnlessEqual(vlan, 1)
 
     def test_path_with_node_set(self):
+        self.logger.warning("BEGIN %s" % (self.id()))
+
         man = TopologyManager(topology_file=CONFIG_FILE)
         topo = man.get_topology()
 
@@ -117,6 +184,8 @@ class VLANTopoTest(unittest.TestCase):
         man.topo.node["br4"]['vlans_in_use'].remove(1)
 
     def test_path_with_edge_set(self):
+        self.logger.warning("BEGIN %s" % (self.id()))
+
         man = TopologyManager(topology_file=CONFIG_FILE)
         topo = man.get_topology()
 
@@ -138,6 +207,8 @@ class VLANTopoTest(unittest.TestCase):
         man.topo.edge["br3"]["br4"]['vlans_in_use'].remove(1)
 
     def test_path_node_filled(self):
+        self.logger.warning("BEGIN %s" % (self.id()))
+
         man = TopologyManager(topology_file=CONFIG_FILE)
         topo = man.get_topology()
 
@@ -158,6 +229,8 @@ class VLANTopoTest(unittest.TestCase):
 
 
     def test_path_edge_filled(self):
+        self.logger.warning("BEGIN %s" % (self.id()))
+
         man = TopologyManager(topology_file=CONFIG_FILE)
         topo = man.get_topology()
 
@@ -176,6 +249,8 @@ class VLANTopoTest(unittest.TestCase):
         man.topo.edge["br4"]["br3"]['vlans_in_use'] = []
 
     def test_reserve_on_empty(self):
+        self.logger.warning("BEGIN %s" % (self.id()))
+
         man = TopologyManager(topology_file=CONFIG_FILE)
         topo = man.get_topology()
 
@@ -187,6 +262,8 @@ class VLANTopoTest(unittest.TestCase):
         # Should work
 
     def test_reserve_on_invalid(self):
+        self.logger.warning("BEGIN %s" % (self.id()))
+
         # Get a path
         man = TopologyManager(topology_file=CONFIG_FILE)
         topo = man.get_topology()
@@ -202,6 +279,8 @@ class VLANTopoTest(unittest.TestCase):
         # Should throw an exception
 
     def test_unreserve_vlan(self):
+        self.logger.warning("BEGIN %s" % (self.id()))
+
         # Get a path
         man = TopologyManager(topology_file=CONFIG_FILE)
         topo = man.get_topology()
@@ -224,12 +303,33 @@ class VLANTopoTest(unittest.TestCase):
 
 
 class BWTopoTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+
+        cls.logger = logging.getLogger(cls.__name__)
+        formatter = logging.Formatter('%(asctime)s %(name)-12s: %(thread)s %(levelname)-8s %(message)s')
+        console = logging.StreamHandler()
+        console.setLevel(logging.DEBUG)
+        console.setFormatter(formatter)
+        cls.logger.setLevel(logging.DEBUG)
+        cls.logger.handlers = []
+        cls.logger.addHandler(console)
+
+        cls.logger.debug("Beginning %s:%s" % (os.path.basename(__file__),
+                                              cls.__name__))
+
+        import sys
+        cls.logger.debug("BEGIN %s" % cls.__name__)
+        cls.logger.debug("sys.path: %s" % sys.path)
+        
     def setUp(self):
         man = TopologyManager(topology_file=CONFIG_FILE)
         man.topo = nx.Graph()
         man._import_topology(CONFIG_FILE)
         
     def test_valid_reservation(self):
+        self.logger.warning("BEGIN %s" % (self.id()))
+
         man = TopologyManager(topology_file=CONFIG_FILE)
         topo = man.get_topology()
 
@@ -241,6 +341,8 @@ class BWTopoTest(unittest.TestCase):
         man.reserve_bw_on_path(path, 100)
         
     def test_reserve_maximum(self):
+        self.logger.warning("BEGIN %s" % (self.id()))
+
         man = TopologyManager(topology_file=CONFIG_FILE)
         topo = man.get_topology()
 
@@ -251,6 +353,8 @@ class BWTopoTest(unittest.TestCase):
         man.unreserve_bw_on_path(path, 8000000000)
 
     def test_reserve_too_much(self):
+        self.logger.warning("BEGIN %s" % (self.id()))
+
         man = TopologyManager(topology_file=CONFIG_FILE)
         topo = man.get_topology()
 
@@ -261,6 +365,8 @@ class BWTopoTest(unittest.TestCase):
                               8000000001)
 
     def test_unreserve_reservation(self):
+        self.logger.warning("BEGIN %s" % (self.id()))
+
         man = TopologyManager(topology_file=CONFIG_FILE)
         topo = man.get_topology()
 
@@ -276,6 +382,8 @@ class BWTopoTest(unittest.TestCase):
         man.unreserve_bw_on_path(path, 100)
 
     def test_unreserve_too_much(self):
+        self.logger.warning("BEGIN %s" % (self.id()))
+
         man = TopologyManager(topology_file=CONFIG_FILE)
         topo = man.get_topology()
 
@@ -305,12 +413,33 @@ class SteinerTreeNoLoopTest(unittest.TestCase):
         +-----+             +-----+
     '''
 
+    @classmethod
+    def setUpClass(cls):
+
+        cls.logger = logging.getLogger(cls.__name__)
+        formatter = logging.Formatter('%(asctime)s %(name)-12s: %(thread)s %(levelname)-8s %(message)s')
+        console = logging.StreamHandler()
+        console.setLevel(logging.DEBUG)
+        console.setFormatter(formatter)
+        cls.logger.setLevel(logging.DEBUG)
+        cls.logger.handlers = []
+        cls.logger.addHandler(console)
+
+        cls.logger.debug("Beginning %s:%s" % (os.path.basename(__file__),
+                                              cls.__name__))
+
+        import sys
+        cls.logger.debug("BEGIN %s" % cls.__name__)
+        cls.logger.debug("sys.path: %s" % sys.path)
+        
     def setUp(self):
         man = TopologyManager(topology_file=STEINER_NO_LOOP_CONFIG_FILE)
         man.topo = nx.Graph()
         man._import_topology(STEINER_NO_LOOP_CONFIG_FILE)
 
     def test_steiner_tree_no_loop(self):
+        self.logger.warning("BEGIN %s" % (self.id()))
+
         man = TopologyManager(topology_file=STEINER_NO_LOOP_CONFIG_FILE)
         topo = man.get_topology()
         
@@ -335,6 +464,8 @@ class SteinerTreeNoLoopTest(unittest.TestCase):
             self.failUnless(node in returned_tree_nodes)
 
     def test_find_vlan(self):
+        self.logger.warning("BEGIN %s" % (self.id()))
+
         man = TopologyManager(topology_file=STEINER_NO_LOOP_CONFIG_FILE)
         topo = man.get_topology()
         
@@ -346,6 +477,8 @@ class SteinerTreeNoLoopTest(unittest.TestCase):
         vlan = man.find_vlan_on_tree(tree)
     
     def test_reserve_vlan(self):
+        self.logger.warning("BEGIN %s" % (self.id()))
+
         man = TopologyManager(topology_file=STEINER_NO_LOOP_CONFIG_FILE)
         topo = man.get_topology()
         
@@ -360,6 +493,8 @@ class SteinerTreeNoLoopTest(unittest.TestCase):
         man.reserve_vlan_on_tree(tree, vlan)
 
     def test_unreserve_vlan(self):
+        self.logger.warning("BEGIN %s" % (self.id()))
+
         man = TopologyManager(topology_file=STEINER_NO_LOOP_CONFIG_FILE)
         topo = man.get_topology()
         
@@ -380,6 +515,8 @@ class SteinerTreeNoLoopTest(unittest.TestCase):
         man.reserve_vlan_on_tree(tree, vlan)
 
     def test_reserve_on_invalid(self):
+        self.logger.warning("BEGIN %s" % (self.id()))
+
         man = TopologyManager(topology_file=STEINER_NO_LOOP_CONFIG_FILE)
         topo = man.get_topology()
         
@@ -397,6 +534,8 @@ class SteinerTreeNoLoopTest(unittest.TestCase):
         self.failUnlessRaises(Exception, man.reserve_vlan_on_tree, tree, vlan)
 
     def test_reserve_bandwidth(self):
+        self.logger.warning("BEGIN %s" % (self.id()))
+
         man = TopologyManager(topology_file=STEINER_NO_LOOP_CONFIG_FILE)
 
         # Get a tree connecting sw1, sw8, and sw6
@@ -413,6 +552,8 @@ class SteinerTreeNoLoopTest(unittest.TestCase):
 
 
     def test_reserve_maximum(self):
+        self.logger.warning("BEGIN %s" % (self.id()))
+
         man = TopologyManager(topology_file=STEINER_NO_LOOP_CONFIG_FILE)
 
         # Get a tree connecting sw1, sw8, and sw6
@@ -424,6 +565,8 @@ class SteinerTreeNoLoopTest(unittest.TestCase):
         man.unreserve_bw_on_tree(tree, 80000000000)
 
     def test_reserve_too_much(self):
+        self.logger.warning("BEGIN %s" % (self.id()))
+
         man = TopologyManager(topology_file=STEINER_NO_LOOP_CONFIG_FILE)
 
         # Get a tree connecting sw1, sw8, and sw6
@@ -435,6 +578,8 @@ class SteinerTreeNoLoopTest(unittest.TestCase):
                               80000000001)
 
     def test_unreserve_bw(self):
+        self.logger.warning("BEGIN %s" % (self.id()))
+
         man = TopologyManager(topology_file=STEINER_NO_LOOP_CONFIG_FILE)
 
         # Get a tree connecting sw1, sw8, and sw6
@@ -452,6 +597,8 @@ class SteinerTreeNoLoopTest(unittest.TestCase):
         man.unreserve_bw_on_tree(tree, 100)        
 
     def test_unreserve_too_much(self):
+        self.logger.warning("BEGIN %s" % (self.id()))
+
         man = TopologyManager(topology_file=STEINER_NO_LOOP_CONFIG_FILE)
 
         # Get a tree connecting sw1, sw8, and sw6
@@ -484,12 +631,33 @@ class SteinerTreeWithLoopTest(unittest.TestCase):
         | sw3 +-------------+ sw8 |
         +-----+             +-----+
     '''
+    @classmethod
+    def setUpClass(cls):
+
+        cls.logger = logging.getLogger(cls.__name__)
+        formatter = logging.Formatter('%(asctime)s %(name)-12s: %(thread)s %(levelname)-8s %(message)s')
+        console = logging.StreamHandler()
+        console.setLevel(logging.DEBUG)
+        console.setFormatter(formatter)
+        cls.logger.setLevel(logging.DEBUG)
+        cls.logger.handlers = []
+        cls.logger.addHandler(console)
+
+        cls.logger.debug("Beginning %s:%s" % (os.path.basename(__file__),
+                                              cls.__name__))
+
+        import sys
+        cls.logger.debug("BEGIN %s" % cls.__name__)
+        cls.logger.debug("sys.path: %s" % sys.path)
+        
     def setUp(self):
         man = TopologyManager(topology_file=STEINER_LOOP_CONFIG_FILE)
         man.topo = nx.Graph()
         man._import_topology(STEINER_LOOP_CONFIG_FILE)
 
     def test_steiner_tree_with_loop(self):
+        self.logger.warning("BEGIN %s" % (self.id()))
+
         man = TopologyManager(topology_file=STEINER_LOOP_CONFIG_FILE)
         topo = man.get_topology()
         

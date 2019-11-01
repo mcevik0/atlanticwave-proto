@@ -34,7 +34,28 @@ def rm_policy(param):
     
 
 class SingletonTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+
+        cls.logger = logging.getLogger(cls.__name__)
+        formatter = logging.Formatter('%(asctime)s %(name)-12s: %(thread)s %(levelname)-8s %(message)s')
+        console = logging.StreamHandler()
+        console.setLevel(logging.DEBUG)
+        console.setFormatter(formatter)
+        cls.logger.setLevel(logging.DEBUG)
+        cls.logger.handlers = []
+        cls.logger.addHandler(console)
+
+        cls.logger.debug("Beginning %s:%s" % (os.path.basename(__file__),
+                                              cls.__name__))
+
+        import sys
+        cls.logger.debug("BEGIN %s" % cls.__name__)
+        cls.logger.debug("sys.path: %s" % sys.path)
+        
     def test_singleton(self):
+        self.logger.warning("BEGIN %s" % (self.id()))
+
         tm = TopologyManager(topology_file=BASIC_MANIFEST_FILE)
         rm = PolicyManager(DB_FILE,
                            send_user_policy_breakdown_add=add_policy,
@@ -47,6 +68,25 @@ class SingletonTest(unittest.TestCase):
 
 
 class PutGetDeltaTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+
+        cls.logger = logging.getLogger(cls.__name__)
+        formatter = logging.Formatter('%(asctime)s %(name)-12s: %(thread)s %(levelname)-8s %(message)s')
+        console = logging.StreamHandler()
+        console.setLevel(logging.DEBUG)
+        console.setFormatter(formatter)
+        cls.logger.setLevel(logging.DEBUG)
+        cls.logger.handlers = []
+        cls.logger.addHandler(console)
+
+        cls.logger.debug("Beginning %s:%s" % (os.path.basename(__file__),
+                                              cls.__name__))
+
+        import sys
+        cls.logger.debug("BEGIN %s" % cls.__name__)
+        cls.logger.debug("sys.path: %s" % sys.path)
+        
     def setUp(self):
         self.raw_request = "raw_request"
         self.sdx_policy_addition = "SDX POLICIES! ADD"
@@ -56,6 +96,8 @@ class PutGetDeltaTest(unittest.TestCase):
         self.status_created = STATUS_ACTIVATED
 
     def test_put(self):
+        self.logger.warning("BEGIN %s" % (self.id()))
+
         # Make sure _put_delta doesn't blow up
         tm = TopologyManager(topology_file=BASIC_MANIFEST_FILE)
         rm = PolicyManager(DB_FILE,
@@ -70,6 +112,8 @@ class PutGetDeltaTest(unittest.TestCase):
                        self.sdx_policy_reduction, self.model_id)
         
     def test_put_get(self):
+        self.logger.warning("BEGIN %s" % (self.id()))
+
         # Make sure _put_delta() and _get_delta_by_id() work
         tm = TopologyManager(topology_file=BASIC_MANIFEST_FILE)
         rm = PolicyManager(DB_FILE,
@@ -91,6 +135,8 @@ class PutGetDeltaTest(unittest.TestCase):
         self.failUnlessEqual(raw_delta['status'], STATUS_ACCEPTED)
 
     def test_get(self):
+        self.logger.warning("BEGIN %s" % (self.id()))
+
         # Test _put_delta() and get_delta()
         tm = TopologyManager(topology_file=BASIC_MANIFEST_FILE)
         rm = PolicyManager(DB_FILE,
@@ -117,6 +163,8 @@ class PutGetDeltaTest(unittest.TestCase):
         self.assertEqual(phase, PHASE_COMMITTED)
 
     def test_put_update(self):
+        self.logger.warning("BEGIN %s" % (self.id()))
+
         # Test updates on _put_delta() command
         tm = TopologyManager(topology_file=BASIC_MANIFEST_FILE)
         rm = PolicyManager(DB_FILE,
@@ -149,6 +197,8 @@ class PutGetDeltaTest(unittest.TestCase):
         self.failUnlessEqual(raw_delta['status'], self.status_created)
 
     def test_put_invalid(self):
+        self.logger.warning("BEGIN %s" % (self.id()))
+
         # Test invalid _put_delta commands
         tm = TopologyManager(topology_file=BASIC_MANIFEST_FILE)
         rm = PolicyManager(DB_FILE,
@@ -189,6 +239,8 @@ class PutGetDeltaTest(unittest.TestCase):
 
 
     def test_get_by_id_invalid(self):
+        self.logger.warning("BEGIN %s" % (self.id()))
+
         # Test invalid _get_delta_by_id() commands
         #   - invalid deltaid
         tm = TopologyManager(topology_file=BASIC_MANIFEST_FILE)
@@ -204,6 +256,8 @@ class PutGetDeltaTest(unittest.TestCase):
             
 
     def test_get_invalid(self):
+        self.logger.warning("BEGIN %s" % (self.id()))
+
         # Test invalid get_delta() commands
         #   - Invalid delta_id
         tm = TopologyManager(topology_file=BASIC_MANIFEST_FILE)
@@ -218,6 +272,25 @@ class PutGetDeltaTest(unittest.TestCase):
                               (None,None))
 
 class CommitTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+
+        cls.logger = logging.getLogger(cls.__name__)
+        formatter = logging.Formatter('%(asctime)s %(name)-12s: %(thread)s %(levelname)-8s %(message)s')
+        console = logging.StreamHandler()
+        console.setLevel(logging.DEBUG)
+        console.setFormatter(formatter)
+        cls.logger.setLevel(logging.DEBUG)
+        cls.logger.handlers = []
+        cls.logger.addHandler(console)
+
+        cls.logger.debug("Beginning %s:%s" % (os.path.basename(__file__),
+                                              cls.__name__))
+
+        import sys
+        cls.logger.debug("BEGIN %s" % cls.__name__)
+        cls.logger.debug("sys.path: %s" % sys.path)
+        
     def setUp(self):
         self.raw_request = "raw_request"
         self.model_id  = 3
@@ -252,6 +325,8 @@ class CommitTest(unittest.TestCase):
 
 
     def test_basic_commit(self):
+        self.logger.warning("BEGIN %s" % (self.id()))
+
         tm = TopologyManager(topology_file=BASIC_MANIFEST_FILE)
         rm = PolicyManager(DB_FILE,
                            send_user_policy_breakdown_add=add_policy,
@@ -266,10 +341,31 @@ class CommitTest(unittest.TestCase):
 
         
 class ModelTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+
+        cls.logger = logging.getLogger(cls.__name__)
+        formatter = logging.Formatter('%(asctime)s %(name)-12s: %(thread)s %(levelname)-8s %(message)s')
+        console = logging.StreamHandler()
+        console.setLevel(logging.DEBUG)
+        console.setFormatter(formatter)
+        cls.logger.setLevel(logging.DEBUG)
+        cls.logger.handlers = []
+        cls.logger.addHandler(console)
+
+        cls.logger.debug("Beginning %s:%s" % (os.path.basename(__file__),
+                                              cls.__name__))
+
+        import sys
+        cls.logger.debug("BEGIN %s" % cls.__name__)
+        cls.logger.debug("sys.path: %s" % sys.path)
+        
     def setup(self):
         pass
 
     def test_generate_model_basic(self):
+        self.logger.warning("BEGIN %s" % (self.id()))
+
         tm = TopologyManager(topology_file=BASIC_MANIFEST_FILE)
         rm = PolicyManager(DB_FILE,
                            send_user_policy_breakdown_add=add_policy,
@@ -290,10 +386,31 @@ class ModelTest(unittest.TestCase):
 #FIXME: What else? - This should definitely be enhanced.
 
 class DeltaTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+
+        cls.logger = logging.getLogger(cls.__name__)
+        formatter = logging.Formatter('%(asctime)s %(name)-12s: %(thread)s %(levelname)-8s %(message)s')
+        console = logging.StreamHandler()
+        console.setLevel(logging.DEBUG)
+        console.setFormatter(formatter)
+        cls.logger.setLevel(logging.DEBUG)
+        cls.logger.handlers = []
+        cls.logger.addHandler(console)
+
+        cls.logger.debug("Beginning %s:%s" % (os.path.basename(__file__),
+                                              cls.__name__))
+
+        import sys
+        cls.logger.debug("BEGIN %s" % cls.__name__)
+        cls.logger.debug("sys.path: %s" % sys.path)
+        
     def setup(self):
         pass
 
     def test_parse_addition(self):
+        self.logger.warning("BEGIN %s" % (self.id()))
+
         tm = TopologyManager(topology_file=BASIC_MANIFEST_FILE)
         rm = PolicyManager(DB_FILE,
                            send_user_policy_breakdown_add=add_policy,
@@ -306,6 +423,8 @@ class DeltaTest(unittest.TestCase):
             addition = addition_file.read()
 
     def test_bad_parse_delta_addition(self):
+        self.logger.warning("BEGIN %s" % (self.id()))
+
         tm = TopologyManager(topology_file=BASIC_MANIFEST_FILE)
         rm = PolicyManager(DB_FILE,
                            send_user_policy_breakdown_add=add_policy,
@@ -319,6 +438,8 @@ class DeltaTest(unittest.TestCase):
                           api._parse_delta, addition)
 
     def test_parse_delta_reduction(self):
+        self.logger.warning("BEGIN %s" % (self.id()))
+
         tm = TopologyManager(topology_file=BASIC_MANIFEST_FILE)
         rm = PolicyManager(DB_FILE,
                            send_user_policy_breakdown_add=add_policy,
@@ -331,6 +452,8 @@ class DeltaTest(unittest.TestCase):
             reduction = reduction_file.read()
 
     def test_bad_parse_delta_reduction(self):
+        self.logger.warning("BEGIN %s" % (self.id()))
+
         tm = TopologyManager(topology_file=BASIC_MANIFEST_FILE)
         rm = PolicyManager(DB_FILE,
                            send_user_policy_breakdown_add=add_policy,
