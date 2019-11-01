@@ -471,6 +471,7 @@ class EP_LOCALCONTROLLERLCINT_Test(EndpointTestCase):
                                           endpoint,
                                           '-b', self.cookie_file])
         expected_output = '{}'
+        print("output: %s" % output)
         if str(output) == "":
             print("%s:%s -\n    Expected output %s\n    Received output ''" %
                   (self, "test_GET_failure",
