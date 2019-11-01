@@ -60,7 +60,7 @@ def check_output_wrapper(param):
     if sys.version_info[0] < 3:
         return output
     #else
-    return output.decode('uft-8')
+    return output.decode('utf-8')
 
 class SingletonTest(unittest.TestCase):
     @classmethod
