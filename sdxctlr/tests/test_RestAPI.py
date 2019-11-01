@@ -341,7 +341,6 @@ class EP_LOCALCONTROLLER_Test(EndpointTestCase):
         self.logger.warning("BEGIN %s" % (self.id()))
 
         endpoint = ENDPOINT_PREFIX + EP_LOCALCONTROLLER
-        if sys.
         expected_output = {
             u"href": unicodify(endpoint),
             u"links": {
