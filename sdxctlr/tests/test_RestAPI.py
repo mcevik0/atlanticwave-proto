@@ -11,6 +11,7 @@ import subprocess
 import os
 import json
 import re
+import sys
 
 from sdxctlr.RestAPI import *
 from sdxctlr.SDXController import SDXController
@@ -51,6 +52,15 @@ def add_policy(param):
 def rm_policy(param):
     # For Policy Manager
     print("Rm  Policy %s" % param)
+
+def check_output_wrapper(param):
+    # This is a Python2/Python3 compatible wrapper for check_output to get it
+    # to return strings based on Python version.
+    output = subprocess.check_output(param)
+    if sys.version_info[0] < 3:
+        return output
+    #else
+    return output.decode('uft-8')
 
 class SingletonTest(unittest.TestCase):
     @classmethod
@@ -466,21 +476,15 @@ class EP_LOCALCONTROLLERLCINT_Test(EndpointTestCase):
         suffix = re.sub(r'(<[a-zA-Z]*>)', "FAKELC", EP_LOCALCONTROLLERLCINT)
         endpoint = ENDPOINT_PREFIX + suffix
 
-        output = subprocess.check_output(['curl', '-X', 'GET',
-                                          '-H', "Accept: application/json",
-                                          endpoint,
-                                          '-b', self.cookie_file]).decode(
-                                              "utf-8")
+        output = check_output_wrapper(['curl', '-X', 'GET',
+                                       '-H', "Accept: application/json",
+                                       endpoint,
+                                       '-b', self.cookie_file])
         expected_output = '{}'
         self.logger.error("output: %s" % output)
-        if str(output) == "":
-            print("%s:%s -\n    Expected output %s\n    Received output ''" %
-                  (self, "test_GET_failure",
-                   expected_output))
-        else:
-            print("%s:%s -\n    Expected output %s\n    Received output %s" %
-                  (self, "test_GET_failure",
-                   expected_output, json.loads(str(output))))
+        print("%s:%s -\n    Expected output %s\n    Received output %s" %
+              (self, "test_GET_failure",
+               expected_output, json.loads(output)))
         self.assertEqual(expected_output, output)
         
 class EP_LOCALCONTROLLERLCSW_Test(EndpointTestCase):
@@ -518,10 +522,10 @@ class EP_LOCALCONTROLLERLCSW_Test(EndpointTestCase):
         suffix = re.sub(r'(<[a-zA-Z]*>)', "FAKELC", EP_LOCALCONTROLLERLCSW)
         endpoint = ENDPOINT_PREFIX + suffix
 
-        output = subprocess.check_output(['curl', '-X', 'GET',
-                                          '-H', "Accept: application/json",
-                                          endpoint,
-                                          '-b', self.cookie_file])
+        output = check_output_wrapper(['curl', '-X', 'GET',
+                                       '-H', "Accept: application/json",
+                                       endpoint,
+                                       '-b', self.cookie_file])
         expected_output = '{}'
         print("%s:%s -\n    Expected output %s\n    Received output %s" %
               (self, "test_GET_failure",
@@ -582,10 +586,10 @@ class EP_LOCALCONTROLLERLCSWSPEC_Test(EndpointTestCase):
         suffix = re.sub(r'(<[a-zA-Z]*>)', 'br1', suffix, 1)
         endpoint = ENDPOINT_PREFIX + suffix
 
-        output = subprocess.check_output(['curl', '-X', 'GET',
-                                          '-H', "Accept: application/json",
-                                          endpoint,
-                                          '-b', self.cookie_file])
+        output = check_output_wrapper(['curl', '-X', 'GET',
+                                       '-H', "Accept: application/json",
+                                       endpoint,
+                                       '-b', self.cookie_file])
         expected_output = '{}'
         print("%s:%s -\n    Expected output %s\n    Received output %s" %
               (self, "test_GET_failure",
@@ -637,10 +641,10 @@ class EP_LOCALCONTROLLERLCSWSPECPORT_Test(EndpointTestCase):
         suffix = re.sub(r'(<[a-zA-Z]*>)', 'br1', suffix, 1)
         endpoint = ENDPOINT_PREFIX + suffix
 
-        output = subprocess.check_output(['curl', '-X', 'GET',
-                                          '-H', "Accept: application/json",
-                                          endpoint,
-                                          '-b', self.cookie_file])
+        output = check_output_wrapper(['curl', '-X', 'GET',
+                                       '-H', "Accept: application/json",
+                                       endpoint,
+                                       '-b', self.cookie_file])
         expected_output = '{}'
         print("%s:%s -\n    Expected output %s\n    Received output %s" %
               (self, "test_GET_failure",
@@ -688,10 +692,10 @@ class EP_LOCALCONTROLLERLCSWSPECPORTSPEC_Test(EndpointTestCase):
         suffix = re.sub(r'(<[a-zA-Z]*>)', '3', suffix, 1)
         endpoint = ENDPOINT_PREFIX + suffix
 
-        output = subprocess.check_output(['curl', '-X', 'GET',
-                                          '-H', "Accept: application/json",
-                                          endpoint,
-                                          '-b', self.cookie_file])
+        output = check_output_wrapper(['curl', '-X', 'GET',
+                                       '-H', "Accept: application/json",
+                                       endpoint,
+                                       '-b', self.cookie_file])
         expected_output = '{}'
         print("%s:%s -\n    Expected output %s\n    Received output %s" %
               (self, "test_GET_failure",
@@ -773,10 +777,10 @@ class EP_USERSSPEC_Test(EndpointTestCase):
                         EP_USERSSPEC, 1)
         endpoint = ENDPOINT_PREFIX + suffix
 
-        output = subprocess.check_output(['curl', '-X', 'GET',
-                                          '-H', "Accept: application/json",
-                                          endpoint,
-                                          '-b', self.cookie_file])
+        output = check_output_wrapper(['curl', '-X', 'GET',
+                                       '-H', "Accept: application/json",
+                                       endpoint,
+                                       '-b', self.cookie_file])
         print("output: %s\n\n\n" % output)
         expected_output = '{}'
         print("%s:%s -\n    Expected output %s\n    Received output %s" %
@@ -816,10 +820,10 @@ class EP_USERSSPECPOLICIES_Test(EndpointTestCase):
                         EP_USERSSPECPOLICIES, 1)
         endpoint = ENDPOINT_PREFIX + suffix
 
-        output = subprocess.check_output(['curl', '-X', 'GET',
-                                          '-H', "Accept: application/json",
-                                          endpoint,
-                                          '-b', self.cookie_file])
+        output = check_output_wrapper(['curl', '-X', 'GET',
+                                       '-H', "Accept: application/json",
+                                       endpoint,
+                                       '-b', self.cookie_file])
         print("output: %s\n\n\n" % output)
         expected_output = '{}'
         print("%s:%s -\n    Expected output %s\n    Received output %s" %
@@ -858,10 +862,10 @@ class EP_USERSSPECPERMISSIONS_Test(EndpointTestCase):
                         EP_USERSSPECPERMISSIONS, 1)
         endpoint = ENDPOINT_PREFIX + suffix
 
-        output = subprocess.check_output(['curl', '-X', 'GET',
-                                          '-H', "Accept: application/json",
-                                          endpoint,
-                                          '-b', self.cookie_file])
+        output = check_output_wrapper(['curl', '-X', 'GET',
+                                       '-H', "Accept: application/json",
+                                       endpoint,
+                                       '-b', self.cookie_file])
         print("output: %s\n\n\n" % output)
         expected_output = '{}'
         print("%s:%s -\n    Expected output %s\n    Received output %s" %
@@ -886,10 +890,10 @@ class EP_POLICIES_Test(EndpointTestCase):
         # Find out the policy number from EP_POLICIES, while making sure
         # there is only a single policy.
         endpoint = ENDPOINT_PREFIX + EP_POLICIES
-        output = subprocess.check_output(['curl', '-X', 'GET',
-                                          '-H', "Accept: application/json",
-                                          endpoint,
-                                          '-b', self.cookie_file])
+        output = check_output_wrapper(['curl', '-X', 'GET',
+                                       '-H', "Accept: application/json",
+                                       endpoint,
+                                       '-b', self.cookie_file])
         output = json.loads(output)
         print("\n\n\n output: %s\n keys:%s\n\n\n" % (output, output.keys()))
 
@@ -939,10 +943,10 @@ class EP_POLICIESSPEC_Test(EndpointTestCase):
         # Find out the policy number from EP_POLICIES, while making sure
         # there is only a single policy.
         endpoint = ENDPOINT_PREFIX + EP_POLICIES
-        output = subprocess.check_output(['curl', '-X', 'GET',
-                                          '-H', "Accept: application/json",
-                                          endpoint,
-                                          '-b', self.cookie_file])
+        output = check_output_wrapper(['curl', '-X', 'GET',
+                                       '-H', "Accept: application/json",
+                                       endpoint,
+                                       '-b', self.cookie_file])
         output = json.loads(output)
         print("\n\n\n output: %s\n keys:%s\n\n\n" % (output, output.keys()))
 
@@ -984,10 +988,10 @@ class EP_POLICIESSPEC_Test(EndpointTestCase):
                         EP_POLICIESSPEC, 1)
         endpoint = ENDPOINT_PREFIX + suffix
 
-        output = subprocess.check_output(['curl', '-X', 'GET',
-                                          '-H', "Accept: application/json",
-                                          endpoint,
-                                          '-b', self.cookie_file])
+        output = check_output_wrapper(['curl', '-X', 'GET',
+                                       '-H', "Accept: application/json",
+                                       endpoint,
+                                       '-b', self.cookie_file])
         print("\n\n\nendpoint: %s\noutput: %s\n\n\n" % (endpoint, output))
         expected_output = {u"error":u"Not found"}
         print("%s:%s -\n    Expected output %s\n    Received output %s" %
@@ -1101,10 +1105,10 @@ class EP_POLICIESTYPESPEC_Test(EndpointTestCase):
         # Find out the policy number from EP_POLICIES, while making sure
         # there is only a single policy.
         endpoint = ENDPOINT_PREFIX + EP_POLICIES
-        output = subprocess.check_output(['curl', '-X', 'GET',
-                                          '-H', "Accept: application/json",
-                                          endpoint,
-                                          '-b', self.cookie_file])
+        output = check_output_wrapper(['curl', '-X', 'GET',
+                                       '-H', "Accept: application/json",
+                                       endpoint,
+                                       '-b', self.cookie_file])
         output = json.loads(output)
         print("\n\n\n output: %s\n keys:%s\n\n\n" % (output, output.keys()))
 
@@ -1142,10 +1146,10 @@ class EP_POLICIESTYPESPEC_Test(EndpointTestCase):
                         EP_POLICIESTYPESPEC, 1)
         endpoint = ENDPOINT_PREFIX + suffix
 
-        output = subprocess.check_output(['curl', '-X', 'GET',
-                                          '-H', "Accept: application/json",
-                                          endpoint,
-                                          '-b', self.cookie_file])
+        output = check_output_wrapper(['curl', '-X', 'GET',
+                                       '-H', "Accept: application/json",
+                                       endpoint,
+                                       '-b', self.cookie_file])
         print("output: %s\n\n\n" % output)
         expected_output = '{}'
         self.assertEqual(expected_output, output)
@@ -1160,10 +1164,10 @@ class EP_POLICIESTYPESPEC_POST_Test(EndpointTestCase):
         # Policy, so it's EP_POLICIESSPEC_Test.test_GET_with_login() all over
         # again
         endpoint = ENDPOINT_PREFIX + EP_POLICIES
-        output = subprocess.check_output(['curl', '-X', 'GET',
-                                          '-H', "Accept: application/json",
-                                          endpoint,
-                                          '-b', self.cookie_file])
+        output = check_output_wrapper(['curl', '-X', 'GET',
+                                       '-H', "Accept: application/json",
+                                       endpoint,
+                                       '-b', self.cookie_file])
         output = json.loads(output)
         print("\n\n\n output: %s\n keys:%s\n\n\n" % (output, output.keys()))
 
@@ -1201,12 +1205,12 @@ class EP_POLICIESTYPESPEC_POST_Test(EndpointTestCase):
         self.run_case_json(getendpoint, expected_empty_output, True)
 
         # install a rule
-        output = subprocess.check_output(['curl', '-X', 'POST',
-                                          '-H','Content-type: application/json',
-                                          '-H','Accept: application/json',
-                                          postendpoint,
-                                          '-d', l2tunnel,
-                                          '-b', self.cookie_file])
+        output = check_output_wrapper(['curl', '-X', 'POST',
+                                       '-H','Content-type: application/json',
+                                       '-H','Accept: application/json',
+                                       postendpoint,
+                                       '-d', l2tunnel,
+                                       '-b', self.cookie_file])
         output = json.loads(output)
         print("%s:%s -\n    Expected output %s\n    Received output %s" %
               (self, "test_install_and_remove",
