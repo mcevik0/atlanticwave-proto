@@ -466,10 +466,10 @@ class EP_LOCALCONTROLLERLCINT_Test(EndpointTestCase):
         suffix = re.sub(r'(<[a-zA-Z]*>)', "FAKELC", EP_LOCALCONTROLLERLCINT)
         endpoint = ENDPOINT_PREFIX + suffix
 
-        output = subprocess.check_output(['curl', '-X', 'GET',
-                                          '-H', "Accept: application/json",
-                                          endpoint,
-                                          '-b', self.cookie_file])
+        output = str(subprocess.check_output(['curl', '-X', 'GET',
+                                              '-H', "Accept: application/json",
+                                              endpoint,
+                                              '-b', self.cookie_file]))
         expected_output = '{}'
         self.logger.error("output: %s" % output)
         if str(output) == "":
