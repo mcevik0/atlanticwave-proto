@@ -473,7 +473,7 @@ class EP_LOCALCONTROLLERLCINT_Test(EndpointTestCase):
         expected_output = '{}'
         print("%s:%s -\n    Expected output %s\n    Received output %s" %
               (self, "test_GET_failure",
-               expected_output, json.loads(output)))
+               expected_output, json.loads(str(output))))
         self.assertEqual(expected_output, output)
         
 class EP_LOCALCONTROLLERLCSW_Test(EndpointTestCase):
