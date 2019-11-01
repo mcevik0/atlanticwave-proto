@@ -156,11 +156,11 @@ class EP_LOGIN_Test(unittest.TestCase):
         if os.path.exists(self.cookie_file):
             os.remove(self.cookie_file)
         # This should fail!
-        output = subprocess.check_output(['curl', '-X', 'POST',
-                                          '-F', "username=sdonovan", # good user
-                                          '-F', "password=4321",     # bad pw
-                                          self.endpoint,
-                                          '-c', self.cookie_file])
+        output = check_output_wrapper(['curl', '-X', 'POST',
+                                       '-F', "username=sdonovan", # good user
+                                       '-F', "password=4321",     # bad pw
+                                       self.endpoint,
+                                       '-c', self.cookie_file])
         self.failIf(os.path.exists(self.cookie_file))
         expected_output = { u"error": u"User Not Authenticated"}
             
@@ -294,29 +294,29 @@ class EndpointTestCase(unittest.TestCase):
         if data != None:
             self.assertTrue(cookie)
             print("\n\n\n##### DATA TEST - %s #####" % data)
-            output = subprocess.check_output(['curl', '-X', method,
-                                              '-H',
-                                              "Content-type: application/json",
-                                              '-H', "Accept: application/json",
-                                              endpoint,
-                                              '-d', data,
-                                              '-b', self.cookie_file])
+            output = check_output_wrapper(['curl', '-X', method,
+                                           '-H',
+                                           "Content-type: application/json",
+                                           '-H', "Accept: application/json",
+                                           endpoint,
+                                           '-d', data,
+                                           '-b', self.cookie_file])
             
         elif cookie:
             print("\n\n\n##### COOKIE TEST - %s #####" % self.cookie_file)
             with open(self.cookie_file) as f:
                 print(f.read())
             print("\n\n\n")
-            output = subprocess.check_output(['curl', '-X', method,
-                                              '-H', "Accept: application/json",
-                                              endpoint,
-                                              '-b', self.cookie_file])
+            output = check_output_wrapper(['curl', '-X', method,
+                                           '-H', "Accept: application/json",
+                                           endpoint,
+                                           '-b', self.cookie_file])
 
         else:
             print("\n\n\n##### NON-COOKIE TEST #####\n\n\n")
-            output = subprocess.check_output(['curl', '-X', method,
-                                              '-H', "Accept: application/json",
-                                              endpoint])
+            output = check_output_wrapper(['curl', '-X', method,
+                                           '-H', "Accept: application/json",
+                                           endpoint])
 
         print("%s:%s -\n    %s:%s\n    Expected output %s\n    Received output %s" %
               (self, "run_case_json", endpoint, method,
@@ -434,10 +434,10 @@ class EP_LOCALCONTROLLERLC_Test(EndpointTestCase):
         suffix = re.sub(r'(<[a-zA-Z]*>)', "FAKELC", EP_LOCALCONTROLLERLC)
         endpoint = ENDPOINT_PREFIX + suffix
 
-        output = subprocess.check_output(['curl', '-X', 'GET',
-                                          '-H', "Accept: application/json",
-                                          endpoint,
-                                          '-b', self.cookie_file])
+        output = check_output_wrapper(['curl', '-X', 'GET',
+                                       '-H', "Accept: application/json",
+                                       endpoint,
+                                       '-b', self.cookie_file])
         expected_output = '{}'
         print("%s:%s -\n    Expected output %s\n    Received output %s" %
               (self, "test_GET_failure",
