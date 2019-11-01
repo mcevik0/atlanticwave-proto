@@ -62,6 +62,13 @@ def check_output_wrapper(param):
     #else
     return output.decode('utf-8')
 
+def unicodify(param):
+    # This is a Python2/Python3 compatible wrapper for unicode to get it
+    # to return strings based on Python version.
+    if sys.version_info[0] < 3:
+        return unicode(param)
+    return param
+
 class SingletonTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -334,11 +341,12 @@ class EP_LOCALCONTROLLER_Test(EndpointTestCase):
         self.logger.warning("BEGIN %s" % (self.id()))
 
         endpoint = ENDPOINT_PREFIX + EP_LOCALCONTROLLER
+        if sys.
         expected_output = {
-            u"href": unicode(endpoint),
+            u"href": unicodify(endpoint),
             u"links": {
                 u"oneLC": {
-                    u"href": unicode(endpoint + "/oneLC")
+                    u"href": unicodify(endpoint + "/oneLC")
                     }
                 }
             }
@@ -350,10 +358,10 @@ class EP_LOCALCONTROLLER_Test(EndpointTestCase):
 
         endpoint = ENDPOINT_PREFIX + EP_LOCALCONTROLLER
         expected_output = {
-            u"href": unicode(endpoint),
+            u"href": unicodify(endpoint),
             u"links": {
                 u"oneLC": {
-                    u"href": unicode(endpoint + "/oneLC")
+                    u"href": unicodify(endpoint + "/oneLC")
                     }
                 }
             }
