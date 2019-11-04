@@ -1207,7 +1207,7 @@ class EP_POLICIESTYPESPEC_POST_Test(EndpointTestCase):
             FTpolicynum = output['links'][output['links'].keys()[0]]['policynumber']
         else:
             FTpolicynum = output['links'][list(output['links'].keys())[0]]['policynumber']
-            self.logger.warning("Policies: %s" % output['links']
+            self.logger.warning("Policies: %s" % output['links'])
             self.logger.warning("FTpolicynum found: %s" % FTpolicynum)
         
 
