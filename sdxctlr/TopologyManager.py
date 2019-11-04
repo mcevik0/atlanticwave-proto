@@ -383,10 +383,14 @@ class TopologyManager(AtlanticWaveManager):
             # Walk through the nodess and reserve it
             for node in nodes:
                 self.topo.node[node]['vlans_in_use'].append(vlan)
+                self.dlogger.debug("  reserved on node: %s" %
+                                   self.topo.node[node]['vlans_in_use'])
 
             # Walk through the edges and reserve it
             for (node, nextnode) in node_pairs:
                 self.topo.edge[node][nextnode]['vlans_in_use'].append(vlan)
+                self.dlogger.debug("  reserved on nodepair: %s" %
+                              self.topo.node[node][nextnode]['vlans_in_use'])
     
     def unreserve_vlan(self, nodes, node_pairs, vlan):
         ''' Generic method for unreserving VLANs on given nodes and paths based 
