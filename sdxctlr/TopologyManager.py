@@ -390,10 +390,17 @@ class TopologyManager(AtlanticWaveManager):
         with self.topolock:
             # Make sure it's already reserved on the given path:
             for node in nodes:
+                self.dlogger.debug("  Reserved on node %s: %s" % (
+                    node, self.topo.node[node]['vlans_in_use']))
+                                                                  
                 if vlan not in self.topo.node[node]['vlans_in_use']:
                     raise TopologyManagerError("VLAN %d is not reserved on node %s" % (vlan, node))
 
             for (node, nextnode) in node_pairs:
+                self.dlogger.debug("  Reserved on nodepair (%s,%s): %s" % (
+                    node, nextnode,
+                    self.topo.edge[node][nextnode]['vlans_in_use']))
+                
                 if vlan not in self.topo.edge[node][nextnode]['vlans_in_use']:
                     raise TopologyManagerError("VLAN %d is not reserved on path %s:%s" % (vlan, node, nextnode))
 
