@@ -484,24 +484,24 @@ class TopologyManager(AtlanticWaveManager):
     def reserve_vlan_on_path(self, path, vlan):
         ''' Marks a VLAN in use on a provided path. Raises an error if the VLAN
             is in use at the time at any location. '''
-        node_pairs = zip(path[0:-1], path[1:])
+        node_pairs = list(zip(path[0:-1], path[1:]))
         self.reserve_vlan(path, node_pairs, vlan)
         
     def unreserve_vlan_on_path(self, path, vlan):
         ''' Removes reservations on a given path for a given VLAN. '''
-        node_pairs = zip(path[0:-1], path[1:])
+        node_pairs = list(zip(path[0:-1], path[1:]))
         self.unreserve_vlan(path, node_pairs, vlan)
 
     def reserve_bw_on_path(self, path, bw):
         ''' Reserves a specified amount of bandwidth on a given path. Raises an
             error if the bandwidth is not available at any part of the path. '''
-        node_pairs = zip(path[0:-1], path[1:])
+        node_pairs = list(zip(path[0:-1], path[1:]))
         self.reserve_bw(node_pairs, bw)
         
     def unreserve_bw_on_path(self, path, bw):
         ''' Removes reservations on a given path for a given amount of
             bandwidth. '''
-        node_pairs = zip(path[0:-1], path[1:])
+        node_pairs = list(zip(path[0:-1], path[1:]))
         self.unreserve_bw(node_pairs, bw)
 
     def find_vlan_on_path(self, path):
