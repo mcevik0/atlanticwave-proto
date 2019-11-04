@@ -168,9 +168,9 @@ class PolicyManager(AtlanticWaveManager):
 
         self.logger.info("add_policy: Beginning with policy: %s" % policy)
         self._update_last_modified_timestamp()
-        try:
-            breakdown = self._determine_breakdown(policy)
-        except Exception: raise
+        #try:
+        breakdown = self._determine_breakdown(policy)
+        #except Exception e: raise
         self.dlogger.info("add_policy: breakdowns %s" % breakdown)        
 
         # If everything passes, set the hash, cookie, and breakdown,
