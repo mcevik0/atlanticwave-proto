@@ -384,7 +384,8 @@ class TopologyManager(AtlanticWaveManager):
             for node in nodes:
                 self.topo.node[node]['vlans_in_use'].append(vlan)
                 self.dlogger.debug("  reserved on node %s: %s" %
-                                   (node, self.topo.node[node]['vlans_in_use'])
+                                   (node,
+                                    self.topo.node[node]['vlans_in_use']))
 
             # Walk through the edges and reserve it
             for (node, nextnode) in node_pairs:
