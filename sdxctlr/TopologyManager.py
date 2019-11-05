@@ -110,13 +110,13 @@ class TopologyManager(AtlanticWaveManager):
         self.logger.debug(" NODES: %s" % self.topo.nodes(data=True))
         self.logger.debug(" EDGES: %s" % self.topo.edges(data=True))
 
-        self.logger.debug("  Nodes")
-        for node in self.topo.nodes(data=True):
-            self.logger.debug("    %s" % node)
-            
-        self.logger.debug("  Edges")
-        for edge in self.topo.edges(data=True):
-            self.logger.debug("    %s" % edge)
+        #self.logger.debug("  Nodes")
+        #for node in self.topo.nodes(data=True):
+        #    self.logger.debug("    %s" % node)
+        #    
+        #self.logger.debug("  Edges")
+        #for edge in self.topo.edges(data=True):
+        #    self.logger.debug("    %s" % edge)
 
     def get_topology(self):
         ''' Returns the topology with all details. 
@@ -409,10 +409,6 @@ class TopologyManager(AtlanticWaveManager):
                 self.dlogger.debug("  LOOKING AT %s,%s" % (node, nextnode))
                 self.log_current_topology()
 
-                self.dlogger.debug("  self.topo.edges(): %s" %
-                                   self.topo.edges(data=True))
-                self.dlogger.debug("  self.topo.edges(): %s" %
-                                   self.topo.edges(data=True))
                 self.topo.edge[node][nextnode]['vlans_in_use'].append(vlan)
                 self.dlogger.debug("  reserved on nodepair (%s, %s): %s" %
                                    (node, nextnode,
