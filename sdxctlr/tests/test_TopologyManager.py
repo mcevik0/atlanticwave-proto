@@ -668,6 +668,9 @@ class SteinerTreeWithLoopTest(unittest.TestCase):
         tree = man.find_valid_steiner_tree(nodes)
         expected_tree_nodes = ["sw1", "sw2", "sw5", "sw4", "sw7"]
         returned_tree_nodes = tree.nodes()
+        self.logger.info("Expected Tree %s" % expected_tree_nodes)
+        self.logger.info("Returned Tree %s" % returned_tree_nodes)
+            
         self.failUnlessEqual(len(expected_tree_nodes), 
                              len(returned_tree_nodes))
         for node in expected_tree_nodes:
@@ -678,6 +681,9 @@ class SteinerTreeWithLoopTest(unittest.TestCase):
         tree = man.find_valid_steiner_tree(nodes)
         expected_tree_nodes = ["sw1", "sw2", "sw3", "sw8", "sw7", "sw6"]
         returned_tree_nodes = tree.nodes()
+        self.logger.info("Expected Tree %s" % expected_tree_nodes)
+        self.logger.info("Returned Tree %s" % returned_tree_nodes)
+
         self.failUnlessEqual(len(expected_tree_nodes), 
                              len(returned_tree_nodes))
         for node in expected_tree_nodes:
@@ -688,6 +694,9 @@ class SteinerTreeWithLoopTest(unittest.TestCase):
         tree = man.find_valid_steiner_tree(nodes)
         expected_tree_nodes = ["sw1", "sw2", "sw3", "sw8"]
         returned_tree_nodes = tree.nodes()
+        self.logger.info("Expected Tree %s" % expected_tree_nodes)
+        self.logger.info("Returned Tree %s" % returned_tree_nodes)
+
         self.failUnlessEqual(len(expected_tree_nodes), 
                              len(returned_tree_nodes))
         for node in expected_tree_nodes:
