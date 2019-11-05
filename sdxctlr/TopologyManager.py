@@ -406,7 +406,7 @@ class TopologyManager(AtlanticWaveManager):
                                (vlan, node_pairs))
             # Walk through the edges and reserve it
             for (node, nextnode) in node_pairs:
-                self.dlogger.debug("  LOOKING AT %s,%s" % (node, nextnode))
+                self.dlogger.debug("BEFORE LOOKING AT %s,%s" % (node, nextnode))
                 self.dlogger.debug("  self.topo.edge[%s][%s] - %s" %
                                    (node, nextnode,
                                     self.topo.edge[node][nextnode]))
@@ -423,7 +423,20 @@ class TopologyManager(AtlanticWaveManager):
                 self.dlogger_tb()
 
                 self.topo.edge[node][nextnode]['vlans_in_use'].append(vlan)
-                self.dlogger.debug("  reserved on nodepair (%s, %s): %s" %
+
+                self.dlogger.debug("AFTER LOOKING AT %s,%s" % (node, nextnode))
+                self.dlogger.debug("  self.topo.edge[%s][%s] - %s" %
+                                   (node, nextnode,
+                                    self.topo.edge[node][nextnode]))
+                self.dlogger.debug("  vlans_in_use: %s" %
+                        self.topo.edge[node][nextnode]['vlans_in_use'])
+                self.dlogger.debug("  type of vlans_in_use: %s" %
+                        type(self.topo.edge[node][nextnode]['vlans_in_use']))
+                self.dlogger.debug("  dir of vlans_in_use: %s" %
+                        dir(self.topo.edge[node][nextnode]['vlans_in_use']))
+                self.dlogger.debug("  vlan: %s" % vlan)
+
+                #self.dlogger.debug("  reserved on nodepair (%s, %s): %s" %
                                    (node, nextnode,
                                     self.topo.node[node][nextnode]['vlans_in_use']))
     
