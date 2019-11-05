@@ -414,6 +414,10 @@ class TopologyManager(AtlanticWaveManager):
                         self.topo.edge[node][nextnode]['vlans_in_use'])
                 self.dlogger.debug("  type of vlans_in_use: %s" %
                         type(self.topo.edge[node][nextnode]['vlans_in_use']))
+                self.dlogger.debug("  dir of vlans_in_use: %s" %
+                        dir(self.topo.edge[node][nextnode]['vlans_in_use']))
+                self.dlogger.debug("  vlan: %s" % vlan)
+
 
                 self.log_current_topology()
                 self.dlogger_tb()
