@@ -105,6 +105,17 @@ class TopologyManager(AtlanticWaveManager):
         self.logger.warning("%s initialized: %s" % (self.__class__.__name__,
                                                     hex(id(self))))
 
+    def log_current_topology(self):
+        self.logger.debug("log_current_topology():")
+
+        self.logger.debug("  Nodes")
+        for node in self.topo.nodes(data=True):
+            self.logger.debug("    %s" % node)
+            
+        self.logger.debug("  Edges")
+        for edge in self.topo.edges(data=True):
+            self.logger.debug("    %s" % edge)
+
     def get_topology(self):
         ''' Returns the topology with all details. 
             This is a NetworkX graph:
@@ -394,6 +405,12 @@ class TopologyManager(AtlanticWaveManager):
             # Walk through the edges and reserve it
             for (node, nextnode) in node_pairs:
                 self.dlogger.debug("  LOOKING AT %s,%s" % (node, nextnode))
+                self.log_current_topology()
+
+                self.dlogger.debug("  self.topo.edges(): %s" %
+                                   self.topo.edges(data=True))
+                self.dlogger.debug("  self.topo.edges(): %s" %
+                                   self.topo.edges(data=True))
                 self.topo.edge[node][nextnode]['vlans_in_use'].append(vlan)
                 self.dlogger.debug("  reserved on nodepair (%s, %s): %s" %
                                    (node, nextnode,
