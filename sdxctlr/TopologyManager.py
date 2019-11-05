@@ -407,8 +407,10 @@ class TopologyManager(AtlanticWaveManager):
             # Walk through the edges and reserve it
             for (node, nextnode) in node_pairs:
                 self.dlogger.debug("  LOOKING AT %s,%s" % (node, nextnode))
+                self.dlogger.debug("  self.topo.edge[%s][%s] - %s" %
+                                   (node, nextnode,
+                                    self.topo.edge[node][nextnode]))
                 self.log_current_topology()
-
                 self.topo.edge[node][nextnode]['vlans_in_use'].append(vlan)
                 self.dlogger.debug("  reserved on nodepair (%s, %s): %s" %
                                    (node, nextnode,
