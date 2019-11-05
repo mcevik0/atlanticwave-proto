@@ -410,8 +410,14 @@ class TopologyManager(AtlanticWaveManager):
                 self.dlogger.debug("  self.topo.edge[%s][%s] - %s" %
                                    (node, nextnode,
                                     self.topo.edge[node][nextnode]))
+                self.dlogger.debug("  vlans_in_use: %s" %
+                        self.topo.edge[node][nextnode]['vlans_in_use'])
+                self.dlogger.debug("  type of vlans_in_use: %s" %
+                        type(self.topo.edge[node][nextnode]['vlans_in_use']))
+
                 self.log_current_topology()
                 self.dlogger_tb()
+
                 self.topo.edge[node][nextnode]['vlans_in_use'].append(vlan)
                 self.dlogger.debug("  reserved on nodepair (%s, %s): %s" %
                                    (node, nextnode,
