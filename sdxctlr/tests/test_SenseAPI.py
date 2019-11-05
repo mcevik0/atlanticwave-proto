@@ -9,6 +9,7 @@ import unittest
 import threading
 import networkx as nx
 import mock
+import logging
 
 from sdxctlr.SenseAPI import *
 from sdxctlr.TopologyManager import TopologyManager
