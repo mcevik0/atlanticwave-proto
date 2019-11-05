@@ -394,51 +394,12 @@ class TopologyManager(AtlanticWaveManager):
                     raise TopologyManagerError("VLAN %d is already reserved on path %s:%s" % (vlan, node, nextnode))                    
 
             # Walk through the nodess and reserve it
-            self.dlogger.debug("    ABOUT TO RESERVE %s on %s" %
-                               (vlan, nodes))
             for node in nodes:
                 self.topo.node[node]['vlans_in_use'].append(vlan)
-                self.dlogger.debug("  reserved on node %s: %s" %
-                                   (node,
-                                    self.topo.node[node]['vlans_in_use']))
 
-            self.dlogger.debug("    ABOUT TO RESERVE %s on %s" %
-                               (vlan, node_pairs))
             # Walk through the edges and reserve it
             for (node, nextnode) in node_pairs:
-                self.dlogger.debug("BEFORE LOOKING AT %s,%s" % (node, nextnode))
-                self.dlogger.debug("  self.topo.edge[%s][%s] - %s" %
-                                   (node, nextnode,
-                                    self.topo.edge[node][nextnode]))
-                self.dlogger.debug("  vlans_in_use: %s" %
-                        self.topo.edge[node][nextnode]['vlans_in_use'])
-                self.dlogger.debug("  type of vlans_in_use: %s" %
-                        type(self.topo.edge[node][nextnode]['vlans_in_use']))
-                self.dlogger.debug("  dir of vlans_in_use: %s" %
-                        dir(self.topo.edge[node][nextnode]['vlans_in_use']))
-                self.dlogger.debug("  vlan: %s" % vlan)
-
-
-                self.log_current_topology()
-                self.dlogger_tb()
-
                 self.topo.edge[node][nextnode]['vlans_in_use'].append(vlan)
-
-                self.dlogger.debug("AFTER LOOKING AT %s,%s" % (node, nextnode))
-                self.dlogger.debug("  self.topo.edge[%s][%s] - %s" %
-                                   (node, nextnode,
-                                    self.topo.edge[node][nextnode]))
-                self.dlogger.debug("  vlans_in_use: %s" %
-                        self.topo.edge[node][nextnode]['vlans_in_use'])
-                self.dlogger.debug("  type of vlans_in_use: %s" %
-                        type(self.topo.edge[node][nextnode]['vlans_in_use']))
-                self.dlogger.debug("  dir of vlans_in_use: %s" %
-                        dir(self.topo.edge[node][nextnode]['vlans_in_use']))
-                self.dlogger.debug("  vlan: %s" % vlan)
-
-                #self.dlogger.debug("  reserved on nodepair (%s, %s): %s" %
-                #(node, nextnode,
-                #self.topo.node[node][nextnode]['vlans_in_use']))
     
     def unreserve_vlan(self, nodes, node_pairs, vlan):
         ''' Generic method for unreserving VLANs on given nodes and paths based 
