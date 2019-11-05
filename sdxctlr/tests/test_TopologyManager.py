@@ -9,6 +9,8 @@ import unittest
 import threading
 #import mock
 import networkx as nx
+import logging
+import os
 
 from sdxctlr.TopologyManager import *
 

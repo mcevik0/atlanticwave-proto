@@ -8,6 +8,8 @@
 import unittest
 import threading
 import mock
+import logging
+import os
 
 from sdxctlr.UserManager import *
 
