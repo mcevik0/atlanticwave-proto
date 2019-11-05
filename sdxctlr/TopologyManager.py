@@ -107,6 +107,8 @@ class TopologyManager(AtlanticWaveManager):
 
     def log_current_topology(self):
         self.logger.debug("log_current_topology():")
+        self.logger.debug(" NODES: %s" % self.topo.nodes(data=True))
+        self.logger.debug(" EDGES: %s" % self.topo.edges(data=True))
 
         self.logger.debug("  Nodes")
         for node in self.topo.nodes(data=True):
