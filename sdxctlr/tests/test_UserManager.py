@@ -14,7 +14,7 @@ import os
 from sdxctlr.UserManager import *
 
 db = ":memory:"
-CONFIG_FILE = 'test_manifests/participants.manifest'
+CONFIG_FILE = 'sdxctlr/tests/test_manifests/participants.manifest'
 class SingletonTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
